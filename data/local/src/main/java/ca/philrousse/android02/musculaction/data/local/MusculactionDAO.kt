@@ -1,14 +1,10 @@
 package ca.philrousse.android02.musculaction.data.local
 
 import androidx.room.Dao
-import ca.philrousse.android02.musculaction.data.entity.CategoryHierachy
 import androidx.room.Insert
-import androidx.room.Transaction
 import androidx.room.Query
-import ca.philrousse.android02.musculaction.data.entity.ExerciceDetailHierachy
-import ca.philrousse.android02.musculaction.data.entity.ExerciseHierachy
-import ca.philrousse.android02.musculaction.data.entity.SubcategoryHierachy
-import ca.philrousse.android02.musculaction.data.entity.table.*
+import androidx.room.Transaction
+import ca.philrousse.android02.musculaction.data.entity.*
 import kotlinx.coroutines.flow.Flow
 
 
