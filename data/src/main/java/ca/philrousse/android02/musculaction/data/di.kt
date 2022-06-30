@@ -21,7 +21,7 @@ class DatabaseModule {
     }
 
     @Provides
-    fun providePlantDao(appDatabase: MusculactionRoomDB): MusculactionDAO {
+    fun provideMusculactionDAO(appDatabase: MusculactionRoomDB): MusculactionDAO {
         return appDatabase.dao()
     }
 }
