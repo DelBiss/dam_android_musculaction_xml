@@ -1,19 +1,28 @@
 package ca.philrousse.android02.musculactionX
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.RecyclerView
+import ca.philrousse.android02.musculaction.data.entity.Card
 import ca.philrousse.android02.musculactionX.databinding.FragmentFirstBinding
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
+@AndroidEntryPoint
 class FirstFragment : Fragment() {
 
     private var _binding: FragmentFirstBinding? = null
+    private val vm:CategoriesViewModel by viewModels()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -30,15 +39,33 @@ class FirstFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        hookRecycleView()
         super.onViewCreated(view, savedInstanceState)
-
-        binding.buttonFirst.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun hookRecycleView(){
+        val recyclerView: RecyclerView = binding.recyclerView
+        val adapter = CardsAdapter()
+
+
+        recyclerView.adapter = adapter
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                vm.categoryList.collect {
+                    if (it.isNotEmpty()) {
+                        @Suppress("UNCHECKED_CAST")
+                        adapter.submitList(it as MutableList<Card>)
+                    } else {
+                        adapter.submitList(null)
+                    }
+                }
+            }
+        }
     }
 }

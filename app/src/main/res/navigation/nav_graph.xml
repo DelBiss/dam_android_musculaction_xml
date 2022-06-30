@@ -3,26 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/CategoriesList">
 
     <fragment
-        android:id="@+id/FirstFragment"
+        android:id="@+id/CategoriesList"
         android:name="ca.philrousse.android02.musculactionX.FirstFragment"
-        android:label="@string/first_fragment_label"
+        android:label="@string/categories_list_fragment_label"
         tools:layout="@layout/fragment_first">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_show_exercices_from_category"
+            app:destination="@id/ExercicesList" />
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
+        android:id="@+id/ExercicesList"
         android:name="ca.philrousse.android02.musculactionX.SecondFragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_second">
 
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            android:id="@+id/action_back_categories_list"
+            app:destination="@id/CategoriesList" />
+        <argument
+            android:name="category_id"
+            app:argType="integer" />
     </fragment>
 </navigation>

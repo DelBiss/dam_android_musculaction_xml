@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="card_data"
+            type="ca.philrousse.android02.musculaction.data.entity.Card" />
+    </data>
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="?attr/materialCardViewElevatedStyle"
+        android:layout_margin="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <!-- Media -->
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_weight="2"
+                android:background="?attr/colorPrimaryContainer"
+                android:contentDescription="@{card_data.name}"
+                android:scaleType="centerCrop"
+                app:tint="?attr/scrimBackground"
+                app:tintMode="src_atop"
+                tools:srcCompat="@drawable/ic_broken_image" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{card_data.name}"
+                    android:layout_weight="1"
+                    android:padding="16dp"
+                    android:layout_gravity="center_vertical"
+                    tools:text="Exercices abdominaux"
+                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                    />
+
+
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>
