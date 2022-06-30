@@ -13,14 +13,14 @@ interface MusculactionDAO {
 
 
     @Transaction
-    @Query("SELECT * FROM ExercisesCategory")
-    fun getFullCategories(): Flow<List<CategoryHierachy>>
+    @Query("SELECT * FROM Category")
+    fun getFullCategories(): Flow<List<CategoryHierarchic>>
 
-    @Query("SELECT * FROM ExercisesCategory")
-    fun getCategories(): Flow<List<ExercisesCategory>>
+    @Query("SELECT * FROM Category")
+    fun getCategories(): Flow<List<Category>>
 
     @Insert
-    fun insert(item: ExercisesCategory):Long
+    fun insert(item: Category):Long
 
     @Insert
     fun insert(item: Exercise):Long
@@ -32,39 +32,39 @@ interface MusculactionDAO {
     fun insert(item: ExerciseDetailVideo):Long
 
     @Insert
-    fun insert(item: ExercisesSubcategory):Long
+    fun insert(item: Subcategory):Long
 
 
 
-    fun insert(parentId:Long, itemView: ExerciceDetailHierachy):Long{
+    fun insert(parentId:Long, itemView: ExercisesDetailHierarchic):Long{
         itemView.item.parentId = parentId
         val itemId = insert(itemView.item)
-        itemView.childs.forEach {
+        itemView.videos.forEach {
             it.parentId = itemId
             insert(it)
         }
         return itemId
     }
-    fun insert(parentId:Long, itemView: ExerciseHierachy):Long{
+    fun insert(parentId:Long, itemView: ExerciseHierarchic):Long{
         itemView.item.parentId = parentId
         val itemId = insert(itemView.item)
-        itemView.childs.forEach {
+        itemView.exercise_details.forEach {
             insert(itemId,it)
         }
         return itemId
     }
 
-    fun insert(parentId:Long, itemView: SubcategoryHierachy):Long{
+    fun insert(parentId:Long, itemView: SubcategoryHierarchic):Long{
         itemView.item.parentId = parentId
         val itemId = insert(itemView.item)
-        itemView.childs.forEach {
+        itemView.exercises.forEach {
             insert(itemId,it)
         }
         return itemId
     }
-    fun insert(itemView: CategoryHierachy):Long{
+    fun insert(itemView: CategoryHierarchic):Long{
         val itemId = insert(itemView.item)
-        itemView.childs.forEach{
+        itemView.subcategories.forEach{
             insert(itemId,it)
         }
         return itemId

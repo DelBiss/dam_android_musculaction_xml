@@ -1,35 +1,33 @@
 package ca.philrousse.android02.musculaction.data.entity
 
-import ca.philrousse.android02.musculaction.data.entity.table.*
-
 import androidx.room.Embedded
 import androidx.room.Relation
 
 
-data class CategoryHierachy (
+data class CategoryHierarchic (
     @Embedded
-    val item:ExercisesCategory= ExercisesCategory(),
+    val item:Category= Category(),
 
     @Relation(
         parentColumn = "id",
         entityColumn = "parentId",
-        entity = ExercisesSubcategory::class
+        entity = Subcategory::class
     )
-    val childs: List<SubcategoryHierachy> = listOf()
+    val subcategories: List<SubcategoryHierarchic> = listOf()
 )
 
-data class SubcategoryHierachy(
+data class SubcategoryHierarchic(
     @Embedded
-    val item: ExercisesSubcategory = ExercisesSubcategory(),
+    val item: Subcategory = Subcategory(),
     @Relation(
         parentColumn = "id",
         entityColumn = "parentId",
         entity = Exercise::class
     )
-    val childs:List<ExerciseHierachy> = listOf()
+    val exercises:List<ExerciseHierarchic> = listOf()
 )
 
-data class ExerciseHierachy(
+data class ExerciseHierarchic(
     @Embedded
     val item: Exercise = Exercise(),
     @Relation(
@@ -37,10 +35,10 @@ data class ExerciseHierachy(
         entityColumn = "parentId",
         entity = ExerciseDetail::class
     )
-    val childs:List<ExerciceDetailHierachy> = listOf()
+    val exercise_details:List<ExercisesDetailHierarchic> = listOf()
 )
 
-data class ExerciceDetailHierachy(
+data class ExercisesDetailHierarchic(
     @Embedded
     val item:ExerciseDetail = ExerciseDetail(),
 
@@ -49,6 +47,6 @@ data class ExerciceDetailHierachy(
         entityColumn = "parentId",
         entity = ExerciseDetailVideo::class
     )
-    val childs:List<ExerciseDetailVideo> = listOf()
+    val videos:List<ExerciseDetailVideo> = listOf()
 )
 

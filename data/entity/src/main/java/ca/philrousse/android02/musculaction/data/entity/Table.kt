@@ -4,21 +4,22 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class ExercisesCategory(
+class Category(
     override var name:String="N/D",
     override var description:String="N/D",
     override var imageID:String="N/D",
     @PrimaryKey(autoGenerate = true)
     override val id:Long?=null
-): DescriptiveCard {
+): DescriptiveCard(name, description, imageID, id) {
+
 
     override fun toString(): String {
-        return "ExercisesCategory(id=$id,name=$name,imageID=$imageID)"
+        return "ExercisesCategory(${super.toString()})"
     }
 }
 
 @Entity
-data class ExercisesSubcategory(
+data class Subcategory(
     var name:String="N/D",
     var parentId:Long?=null,
     @PrimaryKey(autoGenerate = true)
@@ -37,9 +38,9 @@ data class Exercise(
     var parentId:Long?=null,
     @PrimaryKey(autoGenerate = true)
     override val id:Long?=null
-): DescriptiveCard {
+): DescriptiveCard(name, description, imageID, id) {
     override fun toString(): String {
-        return "Exercise(id=$id,name=$name,imageID=$imageID)"
+        return "Exercise(${super.toString()})"
     }
 }
 

@@ -2,22 +2,21 @@ package ca.philrousse.android02.musculaction.data.entity
 
 import androidx.room.Embedded
 import androidx.room.Relation
-import ca.philrousse.android02.musculaction.data.entity.table.*
 
 data class CategoryExercicesViewsList(
     @Embedded
-    val category:ExercisesCategory=ExercisesCategory(),
+    val category:Category=Category(),
     @Relation(
         parentColumn = "id",
         entityColumn = "parentId",
-        entity = ExercisesSubcategory::class
+        entity = Subcategory::class
     )
     val childs: List<CategoryExercicesViewsItem> = listOf()
 )
 
 data class CategoryExercicesViewsItem(
     @Embedded
-    val subcategory: ExercisesSubcategory = ExercisesSubcategory(),
+    val subcategory: Subcategory = Subcategory(),
     @Relation(
         parentColumn = "id",
         entityColumn = "parentId",

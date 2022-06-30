@@ -12,7 +12,7 @@ import androidx.work.workDataOf
 import ca.philrousse.android02.musculaction.data.entity.*
 import ca.philrousse.android02.musculaction.data.local.MusculactionDatabaseWorker.Companion.KEY_FILENAME
 
-@Database(entities = [ExercisesCategory::class,Exercise::class,ExerciseDetail::class,ExerciseDetailVideo::class,ExercisesSubcategory::class], version = 1, exportSchema = false)
+@Database(entities = [Category::class,Exercise::class,ExerciseDetail::class,ExerciseDetailVideo::class,Subcategory::class], version = 1, exportSchema = false)
 abstract class MusculactionRoomDB: RoomDatabase() {
     abstract fun dao(): MusculactionDAO
 
