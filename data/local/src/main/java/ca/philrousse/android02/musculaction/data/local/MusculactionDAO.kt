@@ -1,14 +1,10 @@
 package ca.philrousse.android02.musculaction.data.local
 
 import androidx.room.Dao
-import ca.philrousse.android02.musculaction.data.entity.CategoryHierachy
 import androidx.room.Insert
-import androidx.room.Transaction
 import androidx.room.Query
-import ca.philrousse.android02.musculaction.data.entity.ExerciceDetailHierachy
-import ca.philrousse.android02.musculaction.data.entity.ExerciseHierachy
-import ca.philrousse.android02.musculaction.data.entity.SubcategoryHierachy
-import ca.philrousse.android02.musculaction.data.entity.table.*
+import androidx.room.Transaction
+import ca.philrousse.android02.musculaction.data.entity.*
 import kotlinx.coroutines.flow.Flow
 
 
@@ -17,14 +13,14 @@ interface MusculactionDAO {
 
 
     @Transaction
-    @Query("SELECT * FROM ExercisesCategory")
-    fun getFullCategories(): Flow<List<CategoryHierachy>>
+    @Query("SELECT * FROM Category")
+    fun getFullCategories(): Flow<List<HierarchicCategory>>
 
-    @Query("SELECT * FROM ExercisesCategory")
-    fun getCategories(): Flow<List<ExercisesCategory>>
+    @Query("SELECT * FROM Category")
+    fun getCategories(): Flow<List<Category>>
 
     @Insert
-    fun insert(item: ExercisesCategory):Long
+    fun insert(item: Category):Long
 
     @Insert
     fun insert(item: Exercise):Long
@@ -36,39 +32,37 @@ interface MusculactionDAO {
     fun insert(item: ExerciseDetailVideo):Long
 
     @Insert
-    fun insert(item: ExercisesSubcategory):Long
+    fun insert(item: Subcategory):Long
 
-
-
-    fun insert(parentId:Long, itemView: ExerciceDetailHierachy):Long{
-        itemView.item.parentId = parentId
-        val itemId = insert(itemView.item)
-        itemView.childs.forEach {
+    fun insert(parentId:Long, itemView: ExercisesDetailHierarchic):Long{
+        itemView.parentId = parentId
+        val itemId = insert(itemView as ExerciseDetail)
+        itemView.child.forEach {
             it.parentId = itemId
             insert(it)
         }
         return itemId
     }
-    fun insert(parentId:Long, itemView: ExerciseHierachy):Long{
-        itemView.item.parentId = parentId
-        val itemId = insert(itemView.item)
-        itemView.childs.forEach {
+    fun insert(parentId:Long, itemView: ExerciseHierarchic):Long{
+        itemView.parentId = parentId
+        val itemId = insert(itemView as Exercise)
+        itemView.child.forEach {
             insert(itemId,it)
         }
         return itemId
     }
 
-    fun insert(parentId:Long, itemView: SubcategoryHierachy):Long{
-        itemView.item.parentId = parentId
-        val itemId = insert(itemView.item)
-        itemView.childs.forEach {
+    fun insert(parentId:Long, itemView: SubcategoryHierarchic):Long{
+        itemView.parentId = parentId
+        val itemId = insert(itemView as Subcategory)
+        itemView.child.forEach {
             insert(itemId,it)
         }
         return itemId
     }
-    fun insert(itemView: CategoryHierachy):Long{
-        val itemId = insert(itemView.item)
-        itemView.childs.forEach{
+    fun insert(itemView: HierarchicCategory):Long{
+        val itemId = insert(itemView as Category)
+        itemView.child.forEach{
             insert(itemId,it)
         }
         return itemId

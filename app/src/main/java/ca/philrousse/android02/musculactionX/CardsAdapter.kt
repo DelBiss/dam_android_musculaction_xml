@@ -7,12 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import ca.philrousse.android02.musculaction.data.entity.Card
+import ca.philrousse.android02.musculaction.data.entity.IImageCard
+import ca.philrousse.android02.musculaction.data.entity.ListComparator
 import ca.philrousse.android02.musculactionX.databinding.CardSimpleBinding
 
 
 class CardsAdapter:
-    ListAdapter<Card, CardsAdapter.CardViewHolder>(Card.COMPARATOR){
+    ListAdapter<IImageCard, CardsAdapter.CardViewHolder>(ListComparator<IImageCard>()){
 
         class CardViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
             private var binding: CardSimpleBinding
@@ -22,7 +23,7 @@ class CardsAdapter:
                 context  = itemView.context
             }
 
-            fun bind(item:Card){
+            fun bind(item:IImageCard){
                 binding.cardData = item
                 item.getDrawable(context)?.also {
                     binding.image.setImageDrawable(it)
