@@ -12,18 +12,27 @@ import ca.philrousse.android02.musculaction.data.entity.ListComparator
 import ca.philrousse.android02.musculactionX.databinding.CardSimpleBinding
 
 
-class CardsAdapter:
+class CardsAdapter(private val onClick: (Long?) -> Unit):
     ListAdapter<IImageCard, CardsAdapter.CardViewHolder>(ListComparator<IImageCard>()){
 
-        class CardViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+        class CardViewHolder(itemView: View,private val onClick: (Long?) -> Unit): RecyclerView.ViewHolder(itemView){
             private var binding: CardSimpleBinding
             private var context:Context
+            private var currentCard:IImageCard? = null
             init {
                 binding = CardSimpleBinding.bind(itemView)
                 context  = itemView.context
+
+                itemView.setOnClickListener {
+                    currentCard?.let {
+                        onClick(it.id)
+                    }
+                }
             }
 
+
             fun bind(item:IImageCard){
+                currentCard = item
                 binding.cardData = item
                 item.getDrawable(context)?.also {
                     binding.image.setImageDrawable(it)
@@ -35,7 +44,7 @@ class CardsAdapter:
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.card_simple, parent, false)
-        return CardViewHolder(view)
+        return CardViewHolder(view, onClick)
     }
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {

@@ -25,6 +25,8 @@ class SecondFragment : Fragment() {
     ): View {
 
         _binding = FragmentSecondBinding.inflate(inflater, container, false)
+        val newId = arguments?.getLong("category_id")
+        binding.buttonSecond.text = newId.toString()
         return binding.root
 
     }

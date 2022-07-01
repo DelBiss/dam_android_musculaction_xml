@@ -26,6 +26,6 @@
             app:destination="@id/CategoriesList" />
         <argument
             android:name="category_id"
-            app:argType="integer" />
+            app:argType="long" />
     </fragment>
 </navigation>
