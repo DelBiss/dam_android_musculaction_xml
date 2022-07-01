@@ -12,7 +12,7 @@ import androidx.work.workDataOf
 import ca.philrousse.android02.musculaction.data.entity.*
 import ca.philrousse.android02.musculaction.data.local.MusculactionDatabaseWorker.Companion.KEY_FILENAME
 
-@Database(entities = [Category::class,Exercise::class,ExerciseDetail::class,ExerciseDetailVideo::class,Subcategory::class], version = 2, exportSchema = false)
+@Database(entities = [Category::class,Exercise::class,ExerciseDetail::class,ExerciseDetailVideo::class,Subcategory::class], version = 10, exportSchema = false)
 abstract class MusculactionRoomDB: RoomDatabase() {
     abstract fun dao(): MusculactionDAO
 
@@ -30,8 +30,18 @@ abstract class MusculactionRoomDB: RoomDatabase() {
             return Room.databaseBuilder(context, MusculactionRoomDB::class.java, "bdmusculation")
                 .addCallback(
                     object : RoomDatabase.Callback() {
+
                         override fun onCreate(db: SupportSQLiteDatabase) {
                             super.onCreate(db)
+                            populateDB()
+                        }
+
+                        override fun onDestructiveMigration(db: SupportSQLiteDatabase) {
+                            super.onDestructiveMigration(db)
+                            populateDB()
+                        }
+
+                        private fun populateDB() {
                             val request = OneTimeWorkRequestBuilder<MusculactionDatabaseWorker>()
                                 .setInputData(workDataOf(KEY_FILENAME to "muculaction_data.json"))
                                 .build()
