@@ -14,7 +14,7 @@ interface MusculactionDAO {
 
     @Transaction
     @Query("SELECT * FROM Category")
-    fun getFullCategories(): Flow<List<CategoryHierarchic>>
+    fun getFullCategories(): Flow<List<HierarchicCategory>>
 
     @Query("SELECT * FROM Category")
     fun getCategories(): Flow<List<Category>>
@@ -34,37 +34,35 @@ interface MusculactionDAO {
     @Insert
     fun insert(item: Subcategory):Long
 
-
-
     fun insert(parentId:Long, itemView: ExercisesDetailHierarchic):Long{
-        itemView.item.parentId = parentId
-        val itemId = insert(itemView.item)
-        itemView.videos.forEach {
+        itemView.parentId = parentId
+        val itemId = insert(itemView as ExerciseDetail)
+        itemView.child.forEach {
             it.parentId = itemId
             insert(it)
         }
         return itemId
     }
     fun insert(parentId:Long, itemView: ExerciseHierarchic):Long{
-        itemView.item.parentId = parentId
-        val itemId = insert(itemView.item)
-        itemView.exercise_details.forEach {
+        itemView.parentId = parentId
+        val itemId = insert(itemView as Exercise)
+        itemView.child.forEach {
             insert(itemId,it)
         }
         return itemId
     }
 
     fun insert(parentId:Long, itemView: SubcategoryHierarchic):Long{
-        itemView.item.parentId = parentId
-        val itemId = insert(itemView.item)
-        itemView.exercises.forEach {
+        itemView.parentId = parentId
+        val itemId = insert(itemView as Subcategory)
+        itemView.child.forEach {
             insert(itemId,it)
         }
         return itemId
     }
-    fun insert(itemView: CategoryHierarchic):Long{
-        val itemId = insert(itemView.item)
-        itemView.subcategories.forEach{
+    fun insert(itemView: HierarchicCategory):Long{
+        val itemId = insert(itemView as Category)
+        itemView.child.forEach{
             insert(itemId,it)
         }
         return itemId

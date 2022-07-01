@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import ca.philrousse.android02.musculaction.data.entity.CategoryHierarchic
+import ca.philrousse.android02.musculaction.data.entity.HierarchicCategory
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonReader
@@ -22,8 +22,8 @@ class MusculactionDatabaseWorker(
                 @Suppress("BlockingMethodInNonBlockingContext")
                 applicationContext.assets.open(filename).use { inputStream ->
                     JsonReader(inputStream.reader()).use { jsonReader ->
-                        val CategoryHierarchicType = object : TypeToken<List<CategoryHierarchic>>() {}.type
-                        val exerciseJson: List<CategoryHierarchic> = Gson().fromJson(jsonReader, CategoryHierarchicType)
+                        val hierarchicCategoryType = object : TypeToken<List<HierarchicCategory>>() {}.type
+                        val exerciseJson: List<HierarchicCategory> = Gson().fromJson(jsonReader, hierarchicCategoryType)
 
                         val database = MusculactionRoomDB.getInstance(applicationContext)
                         exerciseJson.forEach {

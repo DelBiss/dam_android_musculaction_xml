@@ -1,52 +1,103 @@
 package ca.philrousse.android02.musculaction.data.entity
 
-import androidx.room.Embedded
 import androidx.room.Relation
 
-
-data class CategoryHierarchic (
-    @Embedded
-    val item:Category= Category(),
+class HierarchicCategory (
+    name:String="N/D",
+    imageID:String="N/D",
+    description:String="N/D",
+    id:Long?=null,
 
     @Relation(
         parentColumn = "id",
         entityColumn = "parentId",
         entity = Subcategory::class
     )
-    val subcategories: List<SubcategoryHierarchic> = listOf()
-)
+    val child: List<SubcategoryHierarchic> = listOf(),
 
-data class SubcategoryHierarchic(
-    @Embedded
-    val item: Subcategory = Subcategory(),
+):Category(name, description, imageID, id){
+    override fun toString(): String {
+        return "<Hierarchic${super.toString()}+ChildCount*${child.count()}>"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is HierarchicCategory) return false
+        if(
+            super.equals(other) &&
+            this.child == other.child
+        ) return true
+        return false
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + child.hashCode()
+        return result
+    }
+}
+
+class SubcategoryHierarchic(
+    name:String="N/D",
+    parentId:Long?=null,
+    id:Long?=null,
     @Relation(
         parentColumn = "id",
         entityColumn = "parentId",
         entity = Exercise::class
     )
-    val exercises:List<ExerciseHierarchic> = listOf()
-)
+    val child:List<ExerciseHierarchic> = listOf(),
 
-data class ExerciseHierarchic(
-    @Embedded
-    val item: Exercise = Exercise(),
+):Subcategory(name, parentId, id){
+    override fun toString(): String {
+        return "<Hierarchic${super.toString()}+ChildCount*${child.count()}>"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is HierarchicCategory) return false
+        if(
+            super.equals(other) &&
+            this.child == other.child
+        ) return true
+        return false
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + child.hashCode()
+        return result
+    }
+}
+
+class ExerciseHierarchic(
+     name:String="N/D",
+     description:String="N/D",
+     imageID:String="N/D",
+     parentId:Long?=null,
+     id:Long?=null,
+
     @Relation(
         parentColumn = "id",
         entityColumn = "parentId",
         entity = ExerciseDetail::class
     )
-    val exercise_details:List<ExercisesDetailHierarchic> = listOf()
-)
+    val child:List<ExercisesDetailHierarchic> = listOf(),
 
-data class ExercisesDetailHierarchic(
-    @Embedded
-    val item:ExerciseDetail = ExerciseDetail(),
+): Exercise(name, description,imageID,parentId, id)
+
+class ExercisesDetailHierarchic(
+     name:String="N/D",
+     description:String="N/D",
+     parentId:Long?=null,
+     id:Long?=null,
 
     @Relation(
         parentColumn = "id",
         entityColumn = "parentId",
         entity = ExerciseDetailVideo::class
     )
-    val videos:List<ExerciseDetailVideo> = listOf()
-)
+    val child:List<ExerciseDetailVideo> = listOf(),
+
+):ExerciseDetail(name, description, parentId, id)
 

@@ -5,7 +5,7 @@
     <data>
         <variable
             name="card_data"
-            type="ca.philrousse.android02.musculaction.data.entity.Card" />
+            type="ca.philrousse.android02.musculaction.data.entity.IImageCard" />
     </data>
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card"
