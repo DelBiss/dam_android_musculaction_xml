@@ -1,10 +1,11 @@
-package ca.philrousse.android02.musculaction.data.local
+package ca.philrousse.android02.musculaction.data.local.database
 
 import android.content.Context
 import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import ca.philrousse.android02.musculaction.data.entity.HierarchicCategory
+import ca.philrousse.android02.musculaction.data.local.json.MAJson
+import ca.philrousse.android02.musculaction.data.local.json.MAJsonCategory
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonReader
@@ -22,14 +23,12 @@ class MusculactionDatabaseWorker(
                 @Suppress("BlockingMethodInNonBlockingContext")
                 applicationContext.assets.open(filename).use { inputStream ->
                     JsonReader(inputStream.reader()).use { jsonReader ->
-                        val hierarchicCategoryType = object : TypeToken<List<HierarchicCategory>>() {}.type
-                        val exerciseJson: List<HierarchicCategory> = Gson().fromJson(jsonReader, hierarchicCategoryType)
+                        val jsonCategoryType = object : TypeToken<List<MAJsonCategory>>() {}.type
+                        val exerciseJson: List<MAJsonCategory> = Gson().fromJson(jsonReader, jsonCategoryType)
 
                         val database = MusculactionRoomDB.getInstance(applicationContext)
-                        exerciseJson.forEach {
-                            database.dao().insert(it)
-                        }
 
+                        MAJson(exerciseJson).insert(database.dao())
 
                         Result.success()
                     }

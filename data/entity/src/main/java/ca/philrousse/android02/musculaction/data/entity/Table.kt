@@ -1,107 +1,124 @@
 package ca.philrousse.android02.musculaction.data.entity
 
+import android.content.Context
+import android.graphics.drawable.Drawable
+import android.util.Log
+import androidx.core.content.res.ResourcesCompat
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-open class Category(
-    override var name:String="N/D",
-    override var description:String="N/D",
-    override var imageID:String="N/D",
-    @PrimaryKey(autoGenerate = true)
-    override val id:Long?=null
-):IDescriptiveImageCard {
-    override fun equals(other: Any?): Boolean = IDescriptiveImageCard.equals(this,other)
-    override fun hashCode(): Int {
-        var result = name.hashCode()
-        result = 31 * result + description.hashCode()
-        result = 31 * result + imageID.hashCode()
-        result = 31 * result + (id?.hashCode() ?: 0)
-        return result
+data class Image(
+    @PrimaryKey
+    val id:String,
+    var smallResource:String?=null,
+    var resource:String?=null
+){
+    fun update(other:Image){
+        if(other.id == id){
+            other.smallResource?.also {
+                smallResource = it
+            }
+
+            other.resource?.also {
+                resource = it
+            }
+        }
+    }
+
+    private fun getResourceId(context: Context, uri:String):Int?{
+
+        val imageResourceId = context.resources.getIdentifier(uri,null,context.packageName)
+        Log.d("getResourceId","ResourceUri= $uri, ID= $imageResourceId")
+        if(imageResourceId == 0){
+            return null
+        }
+        return imageResourceId
+    }
+
+    private fun getDrawable(context: Context, resourceUri: String?):Drawable?{
+
+        Log.d("GetDrawable","ResourceUri= $resourceUri")
+        val resourceId = resourceUri?.let {
+            getResourceId(context, "@drawable/$it")
+        } ?: getResourceId(context, brokenImageResourceString)
+        Log.d("GetDrawable","ResourceUri= $resourceUri, ID= $resourceId")
+        return resourceId?.let {
+            ResourcesCompat.getDrawable(context.resources,it,null)
+        }
+    }
+    fun getDrawable(context: Context):Drawable?{
+        return getDrawable(context, resource ?: smallResource)
+    }
+    fun getSmallestDrawable(context:Context):Drawable?{
+        return getDrawable(context, smallResource ?: resource)
+    }
+    companion object {
+        private const val brokenImageResourceString = "@drawable/ic_broken_image"
     }
 }
 
 @Entity
-open class Subcategory(
-    override var name:String="N/D",
-    override var parentId:Long?=null,
+data class Category(
+    var name:String="N/D",
+    var description:String="N/D",
+    var imageID:String?=null,
     @PrimaryKey(autoGenerate = true)
-    override val id:Long?=null
-):IListElement,IChildItem{
+    val id:Long?=null
+){
     override fun toString(): String {
-        return "Subcategory(id=$id,name=$name)"
-    }
-    override fun equals(other: Any?): Boolean = IListElement.equals(this,other) && IChildItem.equals(this,other)
-    override fun hashCode(): Int {
-        var result = name.hashCode()
-        result = 31 * result + (parentId?.hashCode() ?: 0)
-        result = 31 * result + (id?.hashCode() ?: 0)
-        return result
+        return "Category[#$id](name=$name, imageId=$imageID)"
     }
 }
 
 @Entity
-open class Exercise(
-    override var name:String="N/D",
-    override var description:String="N/D",
-    override var imageID:String="N/D",
-    override var parentId:Long?=null,
+data class Subcategory(
+    var name:String="N/D",
+    var parentId:Long?=null,
     @PrimaryKey(autoGenerate = true)
-    override val id:Long?=null
-): IDescriptiveImageCard,IChildItem {
+    val id:Long?=null
+){
     override fun toString(): String {
-        return "Exercise(${super.toString()})"
-    }
-    override fun equals(other: Any?): Boolean = IDescriptiveImageCard.equals(this,other) && IChildItem.equals(this,other)
-    override fun hashCode(): Int {
-        var result = name.hashCode()
-        result = 31 * result + description.hashCode()
-        result = 31 * result + imageID.hashCode()
-        result = 31 * result + (parentId?.hashCode() ?: 0)
-        result = 31 * result + (id?.hashCode() ?: 0)
-        return result
+        return "Subcategory[#$id](name=$name, parentId=${parentId})"
     }
 }
 
 @Entity
-open class ExerciseDetail(
-    override var name:String="N/D",
-    override var description:String="N/D",
-    override var parentId:Long?=null,
+data class Exercise(
+    var name:String="N/D",
+    var description:String="N/D",
+    var imageID:String?=null,
+    var parentId:Long?=null,
     @PrimaryKey(autoGenerate = true)
-    override val id:Long?=null
-):IDescriptiveCard,IChildItem{
+    val id:Long?=null
+){
     override fun toString(): String {
-        return "ExerciseDetail(id=$id,name=$name)"
-    }
-    override fun equals(other: Any?): Boolean = IDescriptiveCard.equals(this,other) && IChildItem.equals(this,other)
-    override fun hashCode(): Int {
-        var result = name.hashCode()
-        result = 31 * result + description.hashCode()
-        result = 31 * result + (parentId?.hashCode() ?: 0)
-        result = 31 * result + (id?.hashCode() ?: 0)
-        return result
+        return "Exercise[#$id](name=$name, imageId=$imageID, parentId=${parentId})"
     }
 }
 
 @Entity
-open class ExerciseDetailVideo (
+data class ExerciseDetail(
+    var name:String="N/D",
+    var description:String="N/D",
+    var parentId:Long?=null,
+    @PrimaryKey(autoGenerate = true)
+    val id:Long?=null
+){
+    override fun toString(): String {
+        return "ExerciseDetail[#$id](name=$name, parentId=${parentId})"
+    }
+
+}
+
+@Entity
+data class ExerciseDetailVideo (
     var videoUrl:String="N/D",
-    override var parentId:Long?=null,
+    var parentId:Long?=null,
     @PrimaryKey(autoGenerate = true)
-    override val id:Long?=null
-):IChildItem{
+    val id:Long?=null
+){
     override fun toString(): String {
-        return "ExerciseDetailVideo(id=$id,videoUrl=$videoUrl)"
-    }
-    override fun equals(other: Any?): Boolean{
-        return IChildItem.equals(this,other)
-    }
-
-    override fun hashCode(): Int {
-        var result = videoUrl.hashCode()
-        result = 31 * result + (parentId?.hashCode() ?: 0)
-        result = 31 * result + (id?.hashCode() ?: 0)
-        return result
+        return "ExerciseDetailVideo[#$id](videoUrl=$videoUrl, parentId=${parentId})"
     }
 }

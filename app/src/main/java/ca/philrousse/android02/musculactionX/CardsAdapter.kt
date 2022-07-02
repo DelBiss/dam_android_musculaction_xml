@@ -7,18 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import ca.philrousse.android02.musculaction.data.entity.IImageCard
-import ca.philrousse.android02.musculaction.data.entity.ListComparator
+import ca.philrousse.android02.musculaction.data.entity.views.ICard
+import ca.philrousse.android02.musculaction.data.entity.views.ListComparator
 import ca.philrousse.android02.musculactionX.databinding.CardSimpleBinding
 
 
 class CardsAdapter(private val onClick: (Long?) -> Unit):
-    ListAdapter<IImageCard, CardsAdapter.CardViewHolder>(ListComparator<IImageCard>()){
+    ListAdapter<ICard, CardsAdapter.CardViewHolder>(ListComparator<ICard>()){
 
         class CardViewHolder(itemView: View,private val onClick: (Long?) -> Unit): RecyclerView.ViewHolder(itemView){
             private var binding: CardSimpleBinding
             private var context:Context
-            private var currentCard:IImageCard? = null
+            private var currentCard:ICard? = null
             init {
                 binding = CardSimpleBinding.bind(itemView)
                 context  = itemView.context
@@ -30,15 +30,12 @@ class CardsAdapter(private val onClick: (Long?) -> Unit):
                 }
             }
 
-
-            fun bind(item:IImageCard){
+            fun bind(item: ICard){
                 currentCard = item
                 binding.cardData = item
-                item.getDrawable(context)?.also {
+                item.image?.getDrawable(context)?.also {
                     binding.image.setImageDrawable(it)
                 }
-
-
             }
         }
 
