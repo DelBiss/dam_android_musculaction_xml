@@ -18,7 +18,7 @@
     <fragment
         android:id="@+id/ExercicesList"
         android:name="ca.philrousse.android02.musculactionX.SecondFragment"
-        android:label="@string/second_fragment_label"
+        android:label="{title}"
         tools:layout="@layout/fragment_second">
 
         <action
@@ -27,5 +27,9 @@
         <argument
             android:name="category_id"
             app:argType="long" />
+        <argument
+            android:name="title"
+            app:argType="string"
+            android:defaultValue="Fragment 2" />
     </fragment>
 </navigation>

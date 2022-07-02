@@ -54,8 +54,9 @@ class FirstFragment : Fragment() {
 
     private fun hookRecycleView(){
         val recyclerView: RecyclerView = binding.recyclerView
-        val adapter = CardsAdapter { categoryID ->
-            val bundle = bundleOf("category_id" to categoryID)
+        val adapter = CardsAdapter {
+            val bundle = bundleOf("category_id" to it.id)
+            bundle.putString("title",it.name)
             findNavController().navigate(R.id.action_show_exercices_from_category, bundle)
         }
 
