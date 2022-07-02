@@ -12,7 +12,7 @@ import ca.philrousse.android02.musculaction.data.entity.views.ListComparator
 import ca.philrousse.android02.musculactionX.databinding.CardSimpleBinding
 
 
-class CardsAdapter(private val onClick: (ICard) -> Unit):
+class CardsAdapter(private val onClick: (ICard) -> Unit = {}):
     ListAdapter<ICard, CardsAdapter.CardViewHolder>(ListComparator<ICard>()){
 
         class CardViewHolder(itemView: View,private val onClick: (ICard) -> Unit): RecyclerView.ViewHolder(itemView){
