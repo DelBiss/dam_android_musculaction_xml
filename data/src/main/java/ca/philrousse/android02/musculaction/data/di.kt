@@ -1,8 +1,8 @@
 package ca.philrousse.android02.musculaction.data
 
 import android.content.Context
-import ca.philrousse.android02.musculaction.data.local.MusculactionDAO
-import ca.philrousse.android02.musculaction.data.local.MusculactionRoomDB
+import ca.philrousse.android02.musculaction.data.local.database.MusculactionDAO
+import ca.philrousse.android02.musculaction.data.local.database.MusculactionRoomDB
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

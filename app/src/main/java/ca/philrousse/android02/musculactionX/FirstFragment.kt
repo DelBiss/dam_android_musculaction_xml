@@ -10,7 +10,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.RecyclerView
-import ca.philrousse.android02.musculaction.data.entity.IImageCard
+import ca.philrousse.android02.musculaction.data.entity.ICard
+
 
 import ca.philrousse.android02.musculactionX.databinding.FragmentFirstBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -60,8 +61,7 @@ class FirstFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 vm.categoryList.collect {
                     if (it.isNotEmpty()) {
-                        @Suppress("UNCHECKED_CAST")
-                        adapter.submitList(it as MutableList<IImageCard>)
+                        adapter.submitList(it as List<ICard>)
                     } else {
                         adapter.submitList(null)
                     }

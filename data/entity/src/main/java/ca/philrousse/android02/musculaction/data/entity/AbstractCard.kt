@@ -16,103 +16,29 @@ class ListComparator<T:IListElement>:DiffUtil.ItemCallback<T>(){
 }
 
 interface IListElement{
-    var name:String
+    val name:String
     val id:Long?
     override fun equals(other: Any?): Boolean
-
-    companion object{
-        fun equals(me:IListElement, other: Any?): Boolean{
-            if (me === other) return true
-            if (other !is IListElement) return false
-            if(
-                me.id == other.id &&
-                me.name == other.name
-            ) return true
-            return false
-        }
-    }
 }
 
-interface IChildItem{
-    var parentId:Long?
-    val id:Long?
-    override fun equals(other: Any?): Boolean
-
-    companion object{
-        fun equals(me:IChildItem, other: Any?): Boolean{
-            if (me === other) return true
-            if (other !is IChildItem) return false
-            if(
-                me.id == other.id &&
-                me.parentId == other.parentId
-            ) return true
-            return false
-        }
-    }
+interface ICard:IListElement{
+    val image:Image?
+    val description:String?
+    val videos:List<String>
 }
 
-interface IImageCard : IListElement {
-    var imageID: String
-    fun getDrawable(context: Context): Drawable? = Companion.getDrawable(context, imageID)
-
-    companion object{
-        private fun getDrawableResource(context: Context,uri:String):Int?{
-            val imageResource: Int = context.resources.getIdentifier(uri, null, context.packageName)
-            if(imageResource == 0){
-                return null
-            }
-            return imageResource
-        }
-
-        private fun getDrawable(context: Context, imageID: String): Drawable?{
-            val uri = "@drawable/_${imageID.replace('-', '_').split(".")[0]}"
-            val imageResource = getDrawableResource(context, uri)?:run {
-                getDrawableResource(context, "@drawable/ic_broken_image")
-            }
-            return imageResource?.let {
-                ResourcesCompat.getDrawable(context.resources,imageResource,null)
-            }
-        }
-
-        fun equals(me:IImageCard, other: Any?): Boolean{
-            if (me === other) return true
-            if (other !is IImageCard) return false
-            if(
-                me.imageID == other.imageID &&
-                IListElement.equals(me,other)
-            ) return true
-            return false
-        }
-
-    }
+interface ICardsCollection:IListElement{
+    val child:List<ICard>
 }
 
-interface IDescriptiveCard : IListElement {
-    var description: String
-    companion object{
-        fun equals(me:IDescriptiveCard, other: Any?): Boolean{
-            if (me === other) return true
-            if (other !is IDescriptiveCard) return false
-            if(
-                me.description == other.description &&
-                IListElement.equals(me,other)
-            ) return true
-            return false
-        }
-    }
+interface IViewCardsCollections:IListElement{
+    val image:Image?
+    val description:String?
+    val child:List<ICardsCollection>
 }
 
-interface IDescriptiveImageCard:IImageCard,IDescriptiveCard{
-
-    companion object{
-        fun equals(me:IDescriptiveImageCard, other: Any?): Boolean{
-            if (me === other) return true
-            if (other !is IDescriptiveImageCard) return false
-            if(
-                IImageCard.equals(me,other) &&
-                IDescriptiveCard.equals(me,other)
-            ) return true
-            return false
-        }
-    }
+interface IViewCards:IListElement{
+    val image:Image?
+    val description:String?
+    val child:List<ICard>
 }

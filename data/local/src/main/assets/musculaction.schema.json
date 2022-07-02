@@ -1,0 +1,59 @@
+{
+  "items": {
+    "properties": {
+      "title": {},
+      "lien": {},
+      "description": {},
+      "image": {
+        "items": {
+          "properties": {
+            "url": {},
+            "file": {}
+          }
+        }
+      },
+      "subcategories": {
+        "items": {
+          "properties": {
+            "title": {},
+            "exercises": {
+              "items": {
+                "properties": {
+                  "title": {},
+                  "lien": {},
+                  "category": {},
+                  "short_description": {},
+                  "image_short": {
+                    "items": {
+                      "properties": {
+                        "url": {},
+                        "file": {}
+                      }
+                    }
+                  },
+                  "image": {
+                    "items": {
+                      "properties": {
+                        "url": {},
+                        "file": {}
+                      }
+                    }
+                  },
+                  "description": {},
+                  "sections": {
+                    "items": {
+                      "properties": {
+                        "title": {},
+                        "content": {}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
