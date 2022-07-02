@@ -13,19 +13,27 @@
 
         <action
             android:id="@+id/action_show_exercices_from_category"
-            app:destination="@id/ExercicesList" />
+            app:destination="@id/ExercicesList"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/ExercicesList"
         android:name="ca.philrousse.android02.musculactionX.SecondFragment"
-        android:label="@string/second_fragment_label"
+        android:label="{title}"
         tools:layout="@layout/fragment_second">
 
         <action
             android:id="@+id/action_back_categories_list"
-            app:destination="@id/CategoriesList" />
+            app:destination="@id/CategoriesList"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_in_left" />
         <argument
             android:name="category_id"
-            app:argType="integer" />
+            app:argType="long" />
+        <argument
+            android:name="title"
+            app:argType="string"
+            android:defaultValue="Fragment 2" />
     </fragment>
 </navigation>

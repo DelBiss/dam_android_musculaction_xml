@@ -42,7 +42,7 @@
                     android:padding="16dp"
                     android:layout_gravity="center_vertical"
                     tools:text="Exercices abdominaux"
-                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                    android:textAppearance="?attr/textAppearanceTitleLarge"
                     />
 
 
