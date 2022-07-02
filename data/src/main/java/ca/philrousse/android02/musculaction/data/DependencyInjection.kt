@@ -24,4 +24,10 @@ class DatabaseModule {
     fun provideMusculactionDAO(appDatabase: MusculactionRoomDB): MusculactionDAO {
         return appDatabase.dao()
     }
+
+    @Singleton
+    @Provides
+    fun provideIMusculactionRepository(dao:MusculactionDAO): IMusculactionRepository {
+        return MusculactionLocalRepository.getInstance(dao)
+    }
 }

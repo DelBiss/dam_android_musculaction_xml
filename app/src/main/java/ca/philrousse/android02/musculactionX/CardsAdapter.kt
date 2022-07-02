@@ -2,15 +2,14 @@ package ca.philrousse.android02.musculactionX
 
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import ca.philrousse.android02.musculaction.data.entity.ICard
+import ca.philrousse.android02.musculaction.data.entity.views.ICard
 
-import ca.philrousse.android02.musculaction.data.entity.ListComparator
+import ca.philrousse.android02.musculaction.data.entity.views.ListComparator
 import ca.philrousse.android02.musculactionX.databinding.CardSimpleBinding
 
 
@@ -25,7 +24,7 @@ class CardsAdapter:
                 context  = itemView.context
             }
 
-            fun bind(item:ICard){
+            fun bind(item: ICard){
                 binding.cardData = item
                 item.image?.getDrawable(context)?.also {
                     binding.image.setImageDrawable(it)

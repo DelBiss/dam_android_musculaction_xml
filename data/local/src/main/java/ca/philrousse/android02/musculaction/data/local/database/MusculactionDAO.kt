@@ -5,6 +5,9 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import ca.philrousse.android02.musculaction.data.entity.*
+import ca.philrousse.android02.musculaction.data.entity.views.CardCategory
+import ca.philrousse.android02.musculaction.data.entity.views.CategoryExercisesCollections
+import ca.philrousse.android02.musculaction.data.entity.views.ExerciseView
 import kotlinx.coroutines.flow.Flow
 
 
