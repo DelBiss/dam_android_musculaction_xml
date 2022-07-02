@@ -13,7 +13,9 @@
 
         <action
             android:id="@+id/action_show_exercices_from_category"
-            app:destination="@id/ExercicesList" />
+            app:destination="@id/ExercicesList"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/ExercicesList"
@@ -23,7 +25,9 @@
 
         <action
             android:id="@+id/action_back_categories_list"
-            app:destination="@id/CategoriesList" />
+            app:destination="@id/CategoriesList"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_in_left" />
         <argument
             android:name="category_id"
             app:argType="long" />
