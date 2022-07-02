@@ -1,4 +1,4 @@
-package ca.philrousse.android02.musculaction.data.local
+package ca.philrousse.android02.musculaction.data.local.database
 
 
 import android.content.Context
@@ -10,9 +10,9 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
 import ca.philrousse.android02.musculaction.data.entity.*
-import ca.philrousse.android02.musculaction.data.local.MusculactionDatabaseWorker.Companion.KEY_FILENAME
+import ca.philrousse.android02.musculaction.data.local.database.MusculactionDatabaseWorker.Companion.KEY_FILENAME
 
-@Database(entities = [Category::class,Exercise::class,ExerciseDetail::class,ExerciseDetailVideo::class,Subcategory::class], version = 10, exportSchema = false)
+@Database(entities = [Category::class,Exercise::class,ExerciseDetail::class,ExerciseDetailVideo::class,Subcategory::class, Image::class], version = 4, exportSchema = false)
 abstract class MusculactionRoomDB: RoomDatabase() {
     abstract fun dao(): MusculactionDAO
 
