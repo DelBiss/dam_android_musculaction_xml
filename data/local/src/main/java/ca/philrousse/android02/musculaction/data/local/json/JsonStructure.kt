@@ -79,7 +79,8 @@ data class MAJsonCategory(
         return Category(
             name = title,
             description = description,
-            imageID = image.firstOrNull()?.id
+            imageID = image.firstOrNull()?.id,
+            isUserGenerated = false
         )
     }
 
@@ -109,7 +110,8 @@ data class MAJsonSubcategory(
     private val entity: Subcategory get() {
         return Subcategory(
             name = title,
-            parentId = parentId
+            parentId = parentId,
+            isUserGenerated = false
         )
     }
 
@@ -143,9 +145,11 @@ data class MAJsonExercise(
     private val entity: Exercise get() {
         return Exercise(
             name = title,
+            short_description = short_description,
             description = description,
             imageID = image.firstOrNull()?.id,
-            parentId = parentId
+            parentId = parentId,
+            isUserGenerated = false
         )
     }
 
@@ -181,7 +185,8 @@ data class MAJsonSection(
         return ExerciseDetail(
             name = title,
             description = content,
-            parentId = parentId
+            parentId = parentId,
+            isUserGenerated = false
         )
     }
 
@@ -191,7 +196,8 @@ data class MAJsonSection(
         video?.forEach {
             dao.insert(ExerciseDetailVideo(
                     videoUrl = it,
-                    parentId = id
+                    parentId = id,
+                    isUserGenerated = false
                 )
             )
         }
