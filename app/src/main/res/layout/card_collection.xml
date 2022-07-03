@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-            name="collection_data"
+            name="data"
             type="ca.philrousse.android02.musculaction.data.entity.views.ICardsCollection" />
     </data>
     <LinearLayout
@@ -15,7 +15,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:text="@{collection_data.name}"
+            android:text="@{data.name}"
             android:layout_weight="1"
             android:padding="16dp"
             android:layout_gravity="center_vertical"
