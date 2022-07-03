@@ -40,31 +40,35 @@ data class MAJsonImage(
     private val fileWithoutExt:String get() =
         file.split(".")
             .dropLast(1)
-            .joinToString("-")
+            .joinToString("_")
 
-    val id:String get() =
-        fileWithoutExt.split("-")
-            .drop(1)
-            .joinToString(separator = "_")
-
+    val id:String get() {
+        val rIdSplit = fileWithoutExt.split("_")
+        if (rIdSplit.last() == "small") {
+            return rIdSplit.dropLast(1)
+                .joinToString(separator = "_")
+        }
+        return rIdSplit.joinToString(separator = "_")
+    }
     private val smallResource:String? get() {
-        val rIdSplit = fileWithoutExt.split("-")
-        if (rIdSplit.first() == "140"){
-            return "_" + rIdSplit.joinToString(separator = "_")
+        val rIdSplit = fileWithoutExt.split("_")
+        if (rIdSplit.last() == "small"){
+            return "_140_" + id
         }
         return null
     }
     private val resource:String? get() {
-        val rIdSplit = fileWithoutExt.split("-")
-        if (rIdSplit.first() == "intro"){
-            return "_" + rIdSplit.joinToString(separator = "_")
+        val rIdSplit = fileWithoutExt.split("_")
+        if (rIdSplit.last() != "small"){
+            return "_intro_" + id
         }
         return null
     }
-    val entity:Image get() {
+        val entity:Image get() {
         Log.d("MAJsonImage","$this: $id, $smallResource, $resource")
         return Image(id, smallResource, resource)
     }
+
 }
 
 data class MAJsonCategory(
