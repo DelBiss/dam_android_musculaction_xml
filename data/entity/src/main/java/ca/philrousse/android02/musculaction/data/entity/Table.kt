@@ -66,7 +66,8 @@ data class Category(
     var description:String="N/D",
     var imageID:String?=null,
     @PrimaryKey(autoGenerate = true)
-    val id:Long?=null
+    val id:Long?=null,
+    val isUserGenerated:Boolean = true
 ){
     override fun toString(): String {
         return "Category[#$id](name=$name, imageId=$imageID)"
@@ -78,7 +79,8 @@ data class Subcategory(
     var name:String="N/D",
     var parentId:Long?=null,
     @PrimaryKey(autoGenerate = true)
-    val id:Long?=null
+    val id:Long?=null,
+    val isUserGenerated:Boolean = true
 ){
     override fun toString(): String {
         return "Subcategory[#$id](name=$name, parentId=${parentId})"
@@ -88,11 +90,13 @@ data class Subcategory(
 @Entity
 data class Exercise(
     var name:String="N/D",
+    var short_description:String="N/D",
     var description:String="N/D",
     var imageID:String?=null,
     var parentId:Long?=null,
     @PrimaryKey(autoGenerate = true)
-    val id:Long?=null
+    val id:Long?=null,
+    val isUserGenerated:Boolean = true
 ){
     override fun toString(): String {
         return "Exercise[#$id](name=$name, imageId=$imageID, parentId=${parentId})"
@@ -105,7 +109,8 @@ data class ExerciseDetail(
     var description:String="N/D",
     var parentId:Long?=null,
     @PrimaryKey(autoGenerate = true)
-    val id:Long?=null
+    val id:Long?=null,
+    val isUserGenerated:Boolean = true
 ){
     override fun toString(): String {
         return "ExerciseDetail[#$id](name=$name, parentId=${parentId})"
@@ -118,7 +123,8 @@ data class ExerciseDetailVideo (
     var videoUrl:String="N/D",
     var parentId:Long?=null,
     @PrimaryKey(autoGenerate = true)
-    val id:Long?=null
+    val id:Long?=null,
+    val isUserGenerated:Boolean = true
 ){
     override fun toString(): String {
         return "ExerciseDetailVideo[#$id](videoUrl=$videoUrl, parentId=${parentId})"

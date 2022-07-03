@@ -21,7 +21,7 @@ data class CardCategory(
     override val name: String
         get() = category.name
     override val description: String
-        get() = category.description
+        get() = ""
     override val videos: List<String>
         get() = listOf()
 }
