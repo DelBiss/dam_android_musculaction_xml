@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="ca.philrousse.android02.musculactionX">
-
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <application
         android:name=".MusculactionApp"
         android:allowBackup="true"

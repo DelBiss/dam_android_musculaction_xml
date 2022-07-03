@@ -1,9 +1,10 @@
 package ca.philrousse.android02.musculactionX
 
+
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -13,11 +14,10 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import ca.philrousse.android02.musculaction.data.entity.views.ICard
-
-
 import ca.philrousse.android02.musculactionX.databinding.FragmentFirstBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -36,12 +36,48 @@ class FirstFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
+        setHasOptionsMenu(true)
         _binding = FragmentFirstBinding.inflate(inflater, container, false)
         return binding.root
 
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_main, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        return when (item.itemId) {
+            R.id.action_phone -> {
+                val intent = Intent(Intent.ACTION_DIAL).apply {
+                    data = Uri.parse("tel:${getString(R.string.phone_intent)}")
+                }
+                if (activity?.let { intent.resolveActivity(it.packageManager) } != null) {
+                    startActivity(intent)
+                }
+
+                true
+            }
+            R.id.action_mail ->{
+
+
+                val intent = Intent(Intent.ACTION_SENDTO)
+                intent.data = Uri.parse("mailto:") // only email apps should handle this
+
+                intent.putExtra(Intent.EXTRA_EMAIL, getString(R.string.email_recipient))
+                intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.email_subject))
+                intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.email_body))
+                if (activity?.let { intent.resolveActivity(it.packageManager) } != null) {
+                    startActivity(intent)
+                }
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         hookRecycleView()
         super.onViewCreated(view, savedInstanceState)

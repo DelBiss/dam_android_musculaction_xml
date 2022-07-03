@@ -43,4 +43,11 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+    <string name="action_phone">Téléphone</string>
+    <string name="action_mail">Courriel</string>
+    <string name="email_body">Ce courriel à été créé dans le cadre d\'un laboraatoire de la formation de Développement d\'application mobile</string>
+    <string name="email_subject">Développement d\'application mobile: Labo</string>
+    <string name="email_recipient">information@collegeahuntsic.qc.ca</string>
+    <string name="email_intent_title">Choisir un moyen d\'envoyer le courriel</string>
+    <string name="phone_intent">(514) 389–5921</string>
 </resources>
