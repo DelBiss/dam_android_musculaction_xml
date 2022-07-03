@@ -2,7 +2,6 @@ package ca.philrousse.android02.musculaction.data.entity
 
 import android.content.Context
 import android.graphics.drawable.Drawable
-import android.util.Log
 import androidx.core.content.res.ResourcesCompat
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -26,35 +25,38 @@ data class Image(
         }
     }
 
-    private fun getResourceId(context: Context, uri:String):Int?{
-
-        val imageResourceId = context.resources.getIdentifier(uri,null,context.packageName)
-        Log.d("getResourceId","ResourceUri= $uri, ID= $imageResourceId")
-        if(imageResourceId == 0){
-            return null
+    private fun getResourceId(context: Context, uri:String?):Int?{
+        uri?.let {
+            val imageResourceId = context.resources.getIdentifier("@drawable/$uri",null,context.packageName)
+            if(imageResourceId == 0){
+                return null
+            }
+            return imageResourceId
         }
-        return imageResourceId
+        return null
     }
 
-    private fun getDrawable(context: Context, resourceUri: String?):Drawable?{
+    fun getResourceId(context: Context):Int?{
+        return getResourceId(context, resource ?: smallResource) ?: getResourceId(context, brokenImageResourceString)
+    }
 
-        Log.d("GetDrawable","ResourceUri= $resourceUri")
-        val resourceId = resourceUri?.let {
-            getResourceId(context, "@drawable/$it")
-        } ?: getResourceId(context, brokenImageResourceString)
-        Log.d("GetDrawable","ResourceUri= $resourceUri, ID= $resourceId")
+    fun getSmallestResourceId(context: Context):Int?{
+        return getResourceId(context,  smallResource ?: resource) ?: getResourceId(context, brokenImageResourceString)
+    }
+
+    private fun getDrawable(context: Context, resourceId: Int?):Drawable?{
         return resourceId?.let {
             ResourcesCompat.getDrawable(context.resources,it,null)
         }
     }
     fun getDrawable(context: Context):Drawable?{
-        return getDrawable(context, resource ?: smallResource)
+        return getDrawable(context, getResourceId(context))
     }
     fun getSmallestDrawable(context:Context):Drawable?{
-        return getDrawable(context, smallResource ?: resource)
+        return getDrawable(context, getSmallestResourceId(context))
     }
     companion object {
-        private const val brokenImageResourceString = "@drawable/ic_broken_image"
+        private const val brokenImageResourceString = "ic_broken_image"
     }
 }
 

@@ -33,8 +33,11 @@ class CardsAdapter(private val onClick: (ICard) -> Unit = {}):
             fun bind(item: ICard){
                 currentCard = item
                 binding.cardData = item
-                item.image?.getDrawable(context)?.also {
-                    binding.image.setImageDrawable(it)
+                item.image?.getResourceId(context)?.also {
+                    binding.image = it
+                }
+                item.image?.getSmallestResourceId(context)?.also {
+                    binding.imageSmall = it
                 }
             }
         }

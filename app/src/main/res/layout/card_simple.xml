@@ -6,6 +6,14 @@
         <variable
             name="card_data"
             type="ca.philrousse.android02.musculaction.data.entity.views.ICard" />
+        <variable
+            name="image"
+            type="Integer"
+            />
+        <variable
+            name="image_small"
+            type="Integer"
+            />
     </data>
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card"
@@ -29,9 +37,8 @@
                 android:background="?attr/colorPrimaryContainer"
                 android:contentDescription="@{card_data.name}"
                 android:scaleType="centerCrop"
-                app:tint="?attr/colorOnPrimaryContainer"
-                app:tintMode="add"
-                tools:srcCompat="@drawable/_intro_abducteurs_machine" />
+                app:imageResource="@{image}"
+                tools:srcCompat="@drawable/_intro_abducteurs_machine"/>
 
 
                 <TextView
