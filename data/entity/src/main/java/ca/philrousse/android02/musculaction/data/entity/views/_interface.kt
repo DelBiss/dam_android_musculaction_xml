@@ -21,7 +21,7 @@ interface IListElement{
 interface ICard: IListElement {
     val image: Image?
     val description:String?
-    val videos:List<String>
+    val video: String?
 }
 
 interface ICardsCollection: IListElement {

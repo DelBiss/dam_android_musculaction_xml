@@ -67,6 +67,6 @@ data class CardExercise(
         get() = exercise.name
     override val description: String
         get() = exercise.short_description
-    override val videos: List<String>
-        get() = listOf()
+    override val video: String?
+        get() = null
 }
