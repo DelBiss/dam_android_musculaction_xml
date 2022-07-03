@@ -26,21 +26,22 @@
         android:text="@{data.name}"
         tools:text="Muscle Ciblé" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:lineSpacingExtra="4sp"
+        android:text="@{data.description}"
+        android:textAlignment="viewStart"
+        android:textAppearance="?attr/textAppearanceBody1"
+        tools:text="Le relevé de bassin sur plan incliné sollicite le grand droit des abdominaux. Le grand droit, la 'tablette de chocolat' fait partie de la sangle abdominale avec les obliques et le transverse et permet la flexion du tronc. Les exercices d'abdominaux où l’on relève le bassin et les jambes en gardant le buste fixe ont la réputation de travailler plus le bas des abdominaux. Ceux comme les crunchs où l’on enroule la cage thoracique avec les jambes immobiles feraient plus travailler le haut des abdominaux." />
+
     <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
         android:id="@+id/video_player"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility='@{data.video != null ? View.VISIBLE : View.GONE}'
-        android:layout_marginVertical="16dp"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:lineSpacingExtra="4sp"
-        android:layout_marginHorizontal="16dp"
-        android:textAlignment="viewStart"
-        android:text="@{data.description}"
-        android:textAppearance="?attr/textAppearanceBody1"
-        tools:text="Le relevé de bassin sur plan incliné sollicite le grand droit des abdominaux. Le grand droit, la 'tablette de chocolat' fait partie de la sangle abdominale avec les obliques et le transverse et permet la flexion du tronc. Les exercices d'abdominaux où l’on relève le bassin et les jambes en gardant le buste fixe ont la réputation de travailler plus le bas des abdominaux. Ceux comme les crunchs où l’on enroule la cage thoracique avec les jambes immobiles feraient plus travailler le haut des abdominaux." />
+        />
 </LinearLayout>
 
 </layout>
