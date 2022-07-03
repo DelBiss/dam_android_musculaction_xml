@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Musculaction</string>
+    <string name="app_name">Muscul Action</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="categories_list_fragment_label">Musculaction</string>
