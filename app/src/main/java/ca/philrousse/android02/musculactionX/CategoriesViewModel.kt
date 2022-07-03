@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import ca.philrousse.android02.musculaction.data.IMusculactionRepository
 import ca.philrousse.android02.musculaction.data.entity.views.CardCategory
 import ca.philrousse.android02.musculaction.data.entity.views.CategoryExercisesCollections
+import ca.philrousse.android02.musculaction.data.entity.views.ExerciseView
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -19,6 +20,10 @@ class CategoriesViewModel @Inject internal constructor(
 
     fun exercisesByCategory(categoryId: Long): Flow<CategoryExercisesCollections> {
         return musculactionRepository.getExerciseCards(categoryId)
+    }
+
+    fun exercisesDetail(exerciseId: Long): Flow<ExerciseView> {
+        return musculactionRepository.getExerciseDetails(exerciseId)
     }
 
 

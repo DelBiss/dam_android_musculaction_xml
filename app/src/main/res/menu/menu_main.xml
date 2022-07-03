@@ -2,9 +2,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="ca.philrousse.android02.musculactionX.MainActivity">
+
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_phone"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:title="@string/action_phone"
+        android:icon="@drawable/ic_baseline_local_phone_24"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_mail"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_baseline_email_24"
+        android:title="@string/action_mail"
+        app:showAsAction="ifRoom" />
 </menu>

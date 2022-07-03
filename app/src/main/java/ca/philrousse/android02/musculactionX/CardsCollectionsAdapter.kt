@@ -11,10 +11,10 @@ import ca.philrousse.android02.musculaction.data.entity.views.ICardsCollection
 import ca.philrousse.android02.musculaction.data.entity.views.ListComparator
 import ca.philrousse.android02.musculactionX.databinding.CardCollectionBinding
 
-class CardsCollectionsAdapter:
-    ListAdapter<ICardsCollection, CardsCollectionsAdapter.CardViewHolder>(ListComparator<ICardsCollection>()){
+class CardsCollectionsAdapter(private val onClick: (ICard) -> Unit = {}):
+    ListAdapter<ICardsCollection, CardsCollectionsAdapter.CardCollectionsViewHolder>(ListComparator<ICardsCollection>()){
 
-    class CardViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+    class CardCollectionsViewHolder(itemView: View,private val onClick: (ICard) -> Unit): RecyclerView.ViewHolder(itemView){
         private var binding: CardCollectionBinding
         private var context: Context
 
@@ -24,20 +24,20 @@ class CardsCollectionsAdapter:
         }
 
         fun bind(item: ICardsCollection){
-            binding.collectionData = item
+            binding.data = item
             val recyclerView: RecyclerView = binding.recyclerView
-            val adapter = CardsAdapter()
+            val adapter = CardsAdapter(onClick = onClick)
             recyclerView.adapter = adapter
             adapter.submitList(item.child)
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardCollectionsViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.card_collection, parent, false)
-        return CardViewHolder(view)
+        return CardCollectionsViewHolder(view, onClick)
     }
 
-    override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CardCollectionsViewHolder, position: Int) {
         val produit = getItem(position)
         holder.bind(produit)
     }

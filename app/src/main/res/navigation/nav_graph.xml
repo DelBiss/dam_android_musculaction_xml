@@ -23,11 +23,6 @@
         android:label="{title}"
         tools:layout="@layout/fragment_second">
 
-        <action
-            android:id="@+id/action_back_categories_list"
-            app:destination="@id/CategoriesList"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_in_left" />
         <argument
             android:name="category_id"
             app:argType="long" />
@@ -35,5 +30,22 @@
             android:name="title"
             app:argType="string"
             android:defaultValue="Fragment 2" />
+        <action
+            android:id="@+id/action_ExercisesList_to_ExerciseDetail"
+            app:destination="@id/ExerciseDetail" />
     </fragment>
+    <fragment
+        android:id="@+id/ExerciseDetail"
+        android:name="ca.philrousse.android02.musculactionX.ThirdFragment"
+        android:label="{title}"
+        tools:layout="@layout/fragment_first">
+        <argument
+            android:name="exercise_id"
+            app:argType="long" />
+        <argument
+            android:name="title"
+            app:argType="string"
+            android:defaultValue="Fragment 3" />
+    </fragment>
+
 </navigation>

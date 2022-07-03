@@ -1,5 +1,6 @@
 package ca.philrousse.android02.musculaction.data.entity.views
 
+import android.util.Log
 import androidx.room.Embedded
 import androidx.room.Relation
 import ca.philrousse.android02.musculaction.data.entity.Exercise
@@ -36,7 +37,7 @@ data class ExerciseView(
 
 data class CardExerciseDetail(
     @Embedded
-    val detail: ExerciseDetail = ExerciseDetail(),
+    private val detail: ExerciseDetail = ExerciseDetail(),
 
     @Relation(
         parentColumn = "id",
@@ -53,8 +54,8 @@ data class CardExerciseDetail(
         get() = null
     override val description: String
         get() = detail.description
-    override val videos: List<String>
-        get() = videosList.map {
-            it.videoUrl
+    override val video: String?
+        get() = videosList.firstOrNull()?.let {
+            it.videoUrl.split("/").lastOrNull()?.split("?")?.firstOrNull()
         }
 }
