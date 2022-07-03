@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-            name="card_data"
+            name="data"
             type="ca.philrousse.android02.musculaction.data.entity.views.ICard" />
         <variable
             name="image"
@@ -16,7 +16,6 @@
             />
     </data>
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="?attr/materialCardViewElevatedStyle"
@@ -35,7 +34,7 @@
                 android:layout_height="100dp"
                 android:layout_weight="2"
                 android:background="?attr/colorPrimaryContainer"
-                android:contentDescription="@{card_data.name}"
+                android:contentDescription="@{data.name}"
                 android:scaleType="centerCrop"
                 app:imageResource="@{image}"
                 tools:srcCompat="@drawable/_intro_abducteurs_machine"/>
@@ -44,7 +43,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{card_data.name}"
+                    android:text="@{data.name}"
                     android:layout_weight="1"
                     android:padding="16dp"
                     android:layout_gravity="center_vertical"
