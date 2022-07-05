@@ -15,7 +15,8 @@ class MAJson(private val data:List<MAJsonCategory>){
     }
 
     private fun collectUniqueImageEntity():Set<Image>{
-        val images = collectImageEntity()
+        val images = mutableListOf(MAJsonImage(file ="ic_baseline_add_24", url = "").entity)
+        images.addAll(collectImageEntity())
         val imagesMap = mutableMapOf<String,Image>()
         images.forEach {
            imagesMap.getOrPut(it.id) {it}.update(it)
@@ -53,14 +54,14 @@ data class MAJsonImage(
     private val smallResource:String? get() {
         val rIdSplit = fileWithoutExt.split("_")
         if (rIdSplit.last() == "small"){
-            return "_140_" + id
+            return fileWithoutExt
         }
         return null
     }
     private val resource:String? get() {
         val rIdSplit = fileWithoutExt.split("_")
         if (rIdSplit.last() != "small"){
-            return "_intro_" + id
+            return fileWithoutExt
         }
         return null
     }
@@ -101,6 +102,12 @@ data class MAJsonCategory(
 
     fun insert(dao: MusculactionDAO){
         val id = dao.insert(entity)
+        val subCatPerso = Subcategory(
+            name = "Exercices Personnel",
+            parentId = id,
+            isUserGenerated = true
+        )
+        dao.insert(subCatPerso)
         subcategories.forEach {
             it.insert(dao, id)
         }

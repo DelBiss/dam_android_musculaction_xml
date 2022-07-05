@@ -16,8 +16,14 @@ buildscript {
         lifecycleVersion = '2.4.1'
         navigationKtxVersion = '2.4.2'
     }
+    repositories {
+        google()
+    }
     dependencies {
         classpath("com.google.dagger:hilt-android-gradle-plugin:$hiltDaggerVersion")
+
+        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:$navigationKtxVersion")
+
     }
 }
 

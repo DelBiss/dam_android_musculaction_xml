@@ -1,5 +1,8 @@
 package ca.philrousse.android02.musculaction.data
 
+import ca.philrousse.android02.musculaction.data.entity.Exercise
+import ca.philrousse.android02.musculaction.data.entity.ExerciseDetail
+import ca.philrousse.android02.musculaction.data.entity.views.ExerciseView
 import ca.philrousse.android02.musculaction.data.local.database.MusculactionDAO
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -11,6 +14,23 @@ class MusculactionLocalRepository @Inject constructor(private val dao: Musculact
     override fun getCategoryCards() = dao.getCategoryCardsCollection()
     override fun getExerciseCards(categoryId:Long) = dao.getCategoryExercisesCollections(categoryId)
     override fun getExerciseDetails(exerciseId:Long) = dao.getExerciseDetailsCollections(exerciseId)
+    override fun insertOrUpdate(exerciseView: ExerciseView): InsertOrUpdate {
+        val id = dao.insert(exerciseView)
+
+        return if(id == exerciseView.id){
+            InsertOrUpdate.UPDATE
+        } else {
+            InsertOrUpdate.INSERT
+        }
+    }
+
+    override fun delete(exerciseDetails:ExerciseDetail) {
+        dao.delete(exerciseDetails)
+    }
+
+    override fun delete(exercise: Exercise) {
+        dao.delete(exercise)
+    }
 
     companion object{
         @Volatile

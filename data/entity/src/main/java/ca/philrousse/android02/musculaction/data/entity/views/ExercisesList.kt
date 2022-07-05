@@ -16,7 +16,7 @@ data class CategoryExercisesCollections(
         entityColumn = "id",
         entity = Image::class
     )
-    override val image: Image,
+    override val image: Image?,
 
     @Relation(
         parentColumn = "id",
@@ -36,7 +36,7 @@ data class CategoryExercisesCollections(
 
 data class SubcategoryExercisesCardsCollection(
     @Embedded
-    private val subcategory: Subcategory = Subcategory(),
+    val subcategory: Subcategory = Subcategory(),
     @Relation(
         parentColumn = "id",
         entityColumn = "parentId",
@@ -59,7 +59,7 @@ data class CardExercise(
         entityColumn = "id",
         entity = Image::class
     )
-    override val image: Image
+    override val image: Image?
 ): ICard {
     override val id: Long?
         get() = exercise.id

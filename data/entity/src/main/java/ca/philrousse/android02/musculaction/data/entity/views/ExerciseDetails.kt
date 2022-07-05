@@ -1,6 +1,5 @@
 package ca.philrousse.android02.musculaction.data.entity.views
 
-import android.util.Log
 import androidx.room.Embedded
 import androidx.room.Relation
 import ca.philrousse.android02.musculaction.data.entity.Exercise
@@ -10,52 +9,81 @@ import ca.philrousse.android02.musculaction.data.entity.Image
 
 data class ExerciseView(
     @Embedded
-    private val exercise: Exercise = Exercise(),
+    val exercise: Exercise = Exercise(),
 
     @Relation(
         parentColumn = "imageID",
         entityColumn = "id",
         entity = Image::class
     )
-    override val image: Image,
+    override val image: Image? = null,
 
     @Relation(
         parentColumn = "id",
         entityColumn = "parentId",
         entity = ExerciseDetail::class
     )
-    override val child:List<CardExerciseDetail> = listOf()
+    override var child:List<CardExerciseDetail> = listOf()
 ): IViewCards {
+
+    constructor(parentId:Long, image: String?=null):this(Exercise(parentId = parentId, imageID = image))
+
     override val id: Long?
         get() = exercise.id
-    override val name: String
-        get() = exercise.name
-    override val description: String
-        get() = exercise.description
 
+    override var name: String
+        get() = exercise.name
+        set(value) {
+            exercise.name = value
+        }
+    override var description: String
+        get() = exercise.description
+        set(value) {
+            exercise.description = value
+        }
+
+    fun insert(insertFct: (Exercise) -> Unit = {}){
+
+    }
 }
 
 data class CardExerciseDetail(
     @Embedded
-    private val detail: ExerciseDetail = ExerciseDetail(),
+    val detail: ExerciseDetail = ExerciseDetail(),
 
     @Relation(
         parentColumn = "id",
         entityColumn = "parentId",
         entity = ExerciseDetailVideo::class
     )
-    private val videosList:List<ExerciseDetailVideo> = listOf()
+    var videosList:List<ExerciseDetailVideo> = listOf()
 ): ICard {
+    constructor(name:String, parentId: Long?):this(ExerciseDetail(name, parentId = parentId))
     override val id: Long?
         get() = detail.id
-    override val name: String
+    override var name: String
         get() = detail.name
+        set(value) {
+            detail.name = value
+        }
     override val image: Image?
         get() = null
-    override val description: String
+    override var description: String
         get() = detail.description
-    override val video: String?
+        set(value) {
+            detail.description = value
+        }
+    override var video: String?
         get() = videosList.firstOrNull()?.let {
             it.videoUrl.split("/").lastOrNull()?.split("?")?.firstOrNull()
+        }
+        set(value) {
+            value?.also { videoUrl ->
+                videosList.firstOrNull()?.let {
+                    it.videoUrl = videoUrl
+                }?: run{
+                    videosList = listOf(ExerciseDetailVideo(videoUrl))
+                }
+            }
         }
 }

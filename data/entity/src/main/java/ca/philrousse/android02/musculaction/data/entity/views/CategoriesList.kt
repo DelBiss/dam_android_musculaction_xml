@@ -14,7 +14,7 @@ data class CardCategory(
         entityColumn = "id",
         entity = Image::class
     )
-    override val image: Image
+    override val image: Image?
 ): ICard {
     override val id: Long?
         get() = category.id

@@ -30,7 +30,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:itemCount="3"
-            tools:listitem="@layout/card_simple" />
+            tools:listitem="@layout/item_card_simple" />
     </LinearLayout>
 
 </layout>

@@ -1,10 +1,14 @@
+@file:Suppress("unused")
+
 package ca.philrousse.android02.musculaction.data.entity
 
 import android.content.Context
 import android.graphics.drawable.Drawable
 import androidx.core.content.res.ResourcesCompat
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import ca.philrousse.android02.musculaction.data.entity.views.IListElement
 
 @Entity
 data class Image(
@@ -36,7 +40,18 @@ data class Image(
         return null
     }
 
-    fun getResourceId(context: Context):Int?{
+    fun getResourceUri():String?{
+        return (resource ?: smallResource)?.let {
+            "@drawable/$it"
+        }
+    }
+
+    fun getSmallestResourceUri():String?{
+        return (smallResource ?: resource)?.let {
+            "@drawable/$it"
+        }
+    }
+    fun getResourceId(context: Context, default:Int?):Int?{
         return getResourceId(context, resource ?: smallResource) ?: getResourceId(context, brokenImageResourceString)
     }
 
@@ -49,8 +64,8 @@ data class Image(
             ResourcesCompat.getDrawable(context.resources,it,null)
         }
     }
-    fun getDrawable(context: Context):Drawable?{
-        return getDrawable(context, getResourceId(context))
+    fun getDrawable(context: Context,default:Drawable?):Drawable?{
+        return getDrawable(context, getResourceId(context,0))
     }
     fun getSmallestDrawable(context:Context):Drawable?{
         return getDrawable(context, getSmallestResourceId(context))
@@ -62,13 +77,13 @@ data class Image(
 
 @Entity
 data class Category(
-    var name:String="N/D",
-    var description:String="N/D",
+    override var name:String="",
+    var description:String="",
     var imageID:String?=null,
     @PrimaryKey(autoGenerate = true)
-    val id:Long?=null,
+    override val id:Long?=null,
     val isUserGenerated:Boolean = true
-){
+):IListElement{
     override fun toString(): String {
         return "Category[#$id](name=$name, imageId=$imageID)"
     }
@@ -76,51 +91,62 @@ data class Category(
 
 @Entity
 data class Subcategory(
-    var name:String="N/D",
+    override var name:String="",
     var parentId:Long?=null,
     @PrimaryKey(autoGenerate = true)
-    val id:Long?=null,
+    override val id:Long?=null,
     val isUserGenerated:Boolean = true
-){
+):IListElement{
     override fun toString(): String {
         return "Subcategory[#$id](name=$name, parentId=${parentId})"
     }
 }
 
-@Entity
+
+
+@Entity(foreignKeys = [ForeignKey(entity = Subcategory::class,
+    parentColumns = arrayOf("id"),
+    childColumns = arrayOf("parentId"),
+    onDelete = ForeignKey.CASCADE)]
+)
 data class Exercise(
-    var name:String="N/D",
-    var short_description:String="N/D",
-    var description:String="N/D",
+    override var name:String="",
+    var short_description:String="",
+    var description:String="",
     var imageID:String?=null,
     var parentId:Long?=null,
     @PrimaryKey(autoGenerate = true)
-    val id:Long?=null,
+    override val id:Long?=null,
     val isUserGenerated:Boolean = true
-){
+):IListElement{
     override fun toString(): String {
         return "Exercise[#$id](name=$name, imageId=$imageID, parentId=${parentId})"
     }
 }
 
-@Entity
+@Entity(foreignKeys = [ForeignKey(entity = Exercise::class,
+    parentColumns = arrayOf("id"),
+    childColumns = arrayOf("parentId"),
+    onDelete = ForeignKey.CASCADE)])
 data class ExerciseDetail(
-    var name:String="N/D",
-    var description:String="N/D",
+    override var name:String="",
+    var description:String="",
     var parentId:Long?=null,
     @PrimaryKey(autoGenerate = true)
-    val id:Long?=null,
+    override val id:Long?=null,
     val isUserGenerated:Boolean = true
-){
+):IListElement{
     override fun toString(): String {
         return "ExerciseDetail[#$id](name=$name, parentId=${parentId})"
     }
-
 }
 
-@Entity
+@Entity(foreignKeys = [ForeignKey(entity = ExerciseDetail::class,
+    parentColumns = arrayOf("id"),
+    childColumns = arrayOf("parentId"),
+    onDelete = ForeignKey.CASCADE)])
 data class ExerciseDetailVideo (
-    var videoUrl:String="N/D",
+    var videoUrl:String="",
     var parentId:Long?=null,
     @PrimaryKey(autoGenerate = true)
     val id:Long?=null,

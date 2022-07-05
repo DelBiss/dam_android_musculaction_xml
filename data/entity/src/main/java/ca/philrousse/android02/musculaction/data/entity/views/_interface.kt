@@ -18,9 +18,12 @@ interface IListElement{
     override fun equals(other: Any?): Boolean
 }
 
-interface ICard: IListElement {
+interface IImageDescription:IListElement{
     val image: Image?
     val description:String?
+}
+
+interface ICard: IImageDescription {
     val video: String?
 }
 
@@ -28,14 +31,22 @@ interface ICardsCollection: IListElement {
     val child:List<ICard>
 }
 
-interface IViewCardsCollections: IListElement {
-    val image: Image?
-    val description:String?
+interface IViewCardsCollections: IImageDescription {
     val child:List<ICardsCollection>
 }
 
-interface IViewCards: IListElement {
-    val image: Image?
-    val description:String?
+interface IViewCards: IImageDescription {
     val child:List<ICard>
+}
+
+data class  EmptyCard(override val name: String) :ICard{
+    override val video: String?
+        get() = null
+    override val image: Image?
+        get() = null
+    override val description: String?
+        get() = null
+    override val id: Long?
+        get() = null
+
 }

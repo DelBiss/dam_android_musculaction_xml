@@ -1,4 +1,4 @@
-package ca.philrousse.android02.musculactionX
+package ca.philrousse.android02.musculactionX.adapter
 
 
 import android.content.Context
@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ca.philrousse.android02.musculaction.data.entity.views.ICard
 import ca.philrousse.android02.musculaction.data.entity.views.ListComparator
-import ca.philrousse.android02.musculactionX.databinding.CardSimpleBinding
-import ca.philrousse.android02.musculactionX.databinding.DetailSectionBinding
+import ca.philrousse.android02.musculactionX.R
+import ca.philrousse.android02.musculactionX.databinding.ItemDetailSectionBinding
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener
@@ -22,12 +22,12 @@ class CardsDetailAdapter():
     ListAdapter<ICard, CardsDetailAdapter.CardDetailViewHolder>(ListComparator<ICard>()){
 
         class CardDetailViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-            private var binding: DetailSectionBinding
+            private var binding: ItemDetailSectionBinding
             private var context:Context
             private var currentCard:ICard? = null
             init {
 
-                binding = DetailSectionBinding.bind(itemView)
+                binding = ItemDetailSectionBinding.bind(itemView)
                 context  = itemView.context
 
 
@@ -61,7 +61,7 @@ class CardsDetailAdapter():
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardDetailViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.detail_section, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_detail_section, parent, false)
         return CardDetailViewHolder(view)
     }
 

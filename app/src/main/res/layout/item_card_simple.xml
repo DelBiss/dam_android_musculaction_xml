@@ -40,13 +40,13 @@
                 android:background="?attr/colorPrimaryContainer"
                 android:contentDescription="@{data.name}"
                 android:scaleType="centerCrop"
-                app:imageResource="@{image}"
-                tools:srcCompat="@drawable/_intro_abducteurs_machine"/>
+                app:imageDrawable="@{data.image.getDrawable(context, @drawable/ic_broken_image)}"
+                tools:srcCompat="@drawable/abducteurs_machine"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
+                android:layout_gravity="center"
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:padding="16dp">
@@ -54,7 +54,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@{data.name}"
-                    android:layout_gravity="center_vertical"
+                    android:layout_gravity="center"
                     tools:text="Exercices abdominaux"
                     android:textAppearance="?attr/textAppearanceTitleMedium"
                     />

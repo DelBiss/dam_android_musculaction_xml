@@ -1,11 +1,10 @@
-package ca.philrousse.android02.musculactionX
+package ca.philrousse.android02.musculactionX.fragment
 
 
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -14,7 +13,10 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import ca.philrousse.android02.musculaction.data.entity.views.ICard
-import ca.philrousse.android02.musculactionX.databinding.FragmentFirstBinding
+import ca.philrousse.android02.musculactionX.adapter.CardsAdapter
+import ca.philrousse.android02.musculactionX.viewModel.ListViewModel
+import ca.philrousse.android02.musculactionX.R
+import ca.philrousse.android02.musculactionX.databinding.FragmentListBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -23,10 +25,10 @@ import kotlinx.coroutines.launch
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
 @AndroidEntryPoint
-class FirstFragment : Fragment() {
+class CategoriesListFragment : Fragment() {
 
-    private var _binding: FragmentFirstBinding? = null
-    private val vm:CategoriesViewModel by viewModels()
+    private var _binding: FragmentListBinding? = null
+    private val vm: ListViewModel by viewModels()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -37,7 +39,7 @@ class FirstFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         setHasOptionsMenu(true)
-        _binding = FragmentFirstBinding.inflate(inflater, container, false)
+        _binding = FragmentListBinding.inflate(inflater, container, false)
         return binding.root
 
     }
@@ -58,11 +60,9 @@ class FirstFragment : Fragment() {
                 if (activity?.let { intent.resolveActivity(it.packageManager) } != null) {
                     startActivity(intent)
                 }
-
                 true
             }
             R.id.action_mail ->{
-
 
                 val intent = Intent(Intent.ACTION_SENDTO)
                 intent.data = Uri.parse("mailto:") // only email apps should handle this
@@ -91,11 +91,12 @@ class FirstFragment : Fragment() {
     private fun hookRecycleView(){
         val recyclerView: RecyclerView = binding.recyclerView
         val adapter = CardsAdapter {
-            val bundle = bundleOf("category_id" to it.id)
-            bundle.putString("title",it.name)
-            findNavController().navigate(R.id.action_show_exercices_from_category, bundle)
-        }
+            it.id?.let { categoryId ->
+                val action = CategoriesListFragmentDirections.actionDetailCategory(categoryId,it.name)
+                findNavController().navigate(action)
+            }
 
+        }
 
         recyclerView.adapter = adapter
 
@@ -111,4 +112,5 @@ class FirstFragment : Fragment() {
             }
         }
     }
+
 }
