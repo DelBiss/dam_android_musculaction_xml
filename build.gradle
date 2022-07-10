@@ -23,6 +23,7 @@ buildscript {
         classpath("com.google.dagger:hilt-android-gradle-plugin:$hiltDaggerVersion")
 
         classpath("androidx.navigation:navigation-safe-args-gradle-plugin:$navigationKtxVersion")
+        classpath 'com.google.gms:google-services:4.3.3'
 
     }
 }
