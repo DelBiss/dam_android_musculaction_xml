@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 
 
 @Dao
-interface MusculactionDAO {
+interface MusculactionLocalDAO {
 
     val TAG: String
         get() = "MuscualactionDAO"

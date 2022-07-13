@@ -16,7 +16,7 @@ data class CategoryExercisesCollections(
         entityColumn = "id",
         entity = Image::class
     )
-    override val image: Image?,
+    override val image: Image? = null,
 
     @Relation(
         parentColumn = "id",

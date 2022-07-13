@@ -1,12 +1,9 @@
 package ca.philrousse.android02.musculaction.data
 
-import android.content.Context
-import ca.philrousse.android02.musculaction.data.local.database.MusculactionDAO
-import ca.philrousse.android02.musculaction.data.local.database.MusculactionRoomDB
+import ca.philrousse.android02.musculaction.remote.MusculactionRemoteDAO
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -14,20 +11,27 @@ import javax.inject.Singleton
 @Module
 class DatabaseModule {
 
-    @Singleton
-    @Provides
-    fun provideAppDatabase(@ApplicationContext context: Context): MusculactionRoomDB {
-        return MusculactionRoomDB.getInstance(context)
-    }
+//    @Singleton
+//    @Provides
+//    fun provideAppDatabase(@ApplicationContext context: Context): MusculactionRoomDB {
+//        return MusculactionRoomDB.getInstance(context)
+//    }
+//
+//    @Provides
+//    fun provideMusculactionLocalDAO(appDatabase: MusculactionRoomDB): MusculactionLocalDAO {
+//        return appDatabase.dao()
+//    }
 
     @Provides
-    fun provideMusculactionDAO(appDatabase: MusculactionRoomDB): MusculactionDAO {
-        return appDatabase.dao()
+    fun provideMusculactionRemoteDAO(): MusculactionRemoteDAO {
+        return MusculactionRemoteDAO.getInstance()
     }
 
     @Singleton
     @Provides
-    fun provideIMusculactionRepository(dao:MusculactionDAO): IMusculactionRepository {
-        return MusculactionLocalRepository.getInstance(dao)
+    fun provideIMusculactionRepository(dao:MusculactionRemoteDAO): IMusculactionRepository {
+        return MusculactionRemoteRepository.getInstance(dao)
     }
+
+
 }
