@@ -51,11 +51,11 @@ data class Image(
             "@drawable/$it"
         }
     }
-    fun getResourceId(context: Context, default:Int?):Int?{
+    private fun getResourceId(context: Context):Int?{
         return getResourceId(context, resource ?: smallResource) ?: getResourceId(context, brokenImageResourceString)
     }
 
-    fun getSmallestResourceId(context: Context):Int?{
+    private fun getSmallestResourceId(context: Context):Int?{
         return getResourceId(context,  smallResource ?: resource) ?: getResourceId(context, brokenImageResourceString)
     }
 
@@ -65,7 +65,7 @@ data class Image(
         }
     }
     fun getDrawable(context: Context,default:Drawable?):Drawable?{
-        return getDrawable(context, getResourceId(context,0))
+        return getDrawable(context, getResourceId(context)) ?: default
     }
     fun getSmallestDrawable(context:Context):Drawable?{
         return getDrawable(context, getSmallestResourceId(context))

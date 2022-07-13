@@ -1,13 +1,11 @@
 package ca.philrousse.android02.musculactionX.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ca.philrousse.android02.musculaction.data.entity.views.CardExerciseDetail
-import ca.philrousse.android02.musculaction.data.entity.views.ICard
 import ca.philrousse.android02.musculaction.data.entity.views.ListComparator
 import ca.philrousse.android02.musculactionX.R
 import ca.philrousse.android02.musculactionX.databinding.LayoutEditSectionBinding

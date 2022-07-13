@@ -71,16 +71,16 @@ class EditViewModel @Inject internal constructor(
 
 
     fun deleteExercise(callback: ((Boolean) -> Unit)? = null)= CoroutineScope(Dispatchers.IO).launch {
-        var isSucces = false
+        var isSuccess = false
         editedExercise.value?.let {
             it.id?.let { _->
                 musculactionRepository.delete(it.exercise)
-                isSucces = true
+                isSuccess = true
             }
         }
 
         callback?.let { cb ->
-            cb(isSucces)
+            cb(isSuccess)
         }
     }
 

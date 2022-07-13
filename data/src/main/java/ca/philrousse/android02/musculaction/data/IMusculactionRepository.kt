@@ -1,6 +1,6 @@
 package ca.philrousse.android02.musculaction.data
 
-import androidx.room.Delete
+
 import ca.philrousse.android02.musculaction.data.entity.Exercise
 import ca.philrousse.android02.musculaction.data.entity.ExerciseDetail
 import ca.philrousse.android02.musculaction.data.entity.views.CardCategory

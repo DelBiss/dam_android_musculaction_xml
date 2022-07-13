@@ -102,12 +102,13 @@ data class MAJsonCategory(
 
     fun insert(dao: MusculactionDAO){
         val id = dao.insert(entity)
-        val subCatPerso = Subcategory(
-            name = "Exercices Personnel",
+        //Add an empty category for personal exercise
+        val subCatPersonnel = Subcategory(
+            name = "Exercises Personnel",
             parentId = id,
             isUserGenerated = true
         )
-        dao.insert(subCatPerso)
+        dao.insert(subCatPersonnel)
         subcategories.forEach {
             it.insert(dao, id)
         }

@@ -67,17 +67,8 @@ class ExerciseDetailsFragment : Fragment() {
         }
     }
 
-    fun deleteExercise(){
-        vm.deleteExercise((binding.data as ExerciseView).exercise){isComplete->
-            view?.let { view ->
-                val snackbarString = when(isComplete) {
-                    true -> "L'exercise à été effacer"
-                    false -> "Un erreur c'est produit"
-                }
-
-//                Snackbar.make(view, snackbarString, Snackbar.LENGTH_LONG).show()
-            }
-        }
+    private fun deleteExercise(){
+        vm.deleteExercise((binding.data as ExerciseView).exercise){}
         findNavController().navigateUp()
 
 
@@ -103,7 +94,7 @@ class ExerciseDetailsFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 vm.exercisesDetail(arg.exerciseId).collect {
                     binding.data = it
-                    (activity as AppCompatActivity?)!!.supportActionBar!!.setTitle(it.name)
+                    (activity as AppCompatActivity?)!!.supportActionBar!!.title = it.name
                     val sections = it.child
 //                    binding.title = it.name
 //                    binding.description = it.description

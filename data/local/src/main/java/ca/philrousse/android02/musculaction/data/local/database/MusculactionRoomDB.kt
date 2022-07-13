@@ -17,6 +17,8 @@ abstract class MusculactionRoomDB: RoomDatabase() {
     abstract fun dao(): MusculactionDAO
 
     companion object {
+        private const val JSON_FILE = "musculaction_data.json"
+        private const val BD_NAME = "bdmusculation"
         @Volatile
         private var instance: MusculactionRoomDB? = null
 
@@ -27,7 +29,7 @@ abstract class MusculactionRoomDB: RoomDatabase() {
         }
 
         private fun buildDatabase(context: Context): MusculactionRoomDB {
-            return Room.databaseBuilder(context, MusculactionRoomDB::class.java, "bdmusculation")
+            return Room.databaseBuilder(context, MusculactionRoomDB::class.java, BD_NAME)
                 .addCallback(
                     object : RoomDatabase.Callback() {
 
@@ -43,7 +45,7 @@ abstract class MusculactionRoomDB: RoomDatabase() {
 
                         private fun populateDB() {
                             val request = OneTimeWorkRequestBuilder<MusculactionDatabaseWorker>()
-                                .setInputData(workDataOf(KEY_FILENAME to "muculaction_data.json"))
+                                .setInputData(workDataOf(KEY_FILENAME to JSON_FILE))
                                 .build()
                             WorkManager.getInstance(context).enqueue(request)
                         }

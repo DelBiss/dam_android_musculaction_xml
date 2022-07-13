@@ -18,7 +18,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.options.IFram
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.DefaultPlayerUiController
 
 
-class CardsDetailAdapter():
+class CardsDetailAdapter:
     ListAdapter<ICard, CardsDetailAdapter.CardDetailViewHolder>(ListComparator<ICard>()){
 
         class CardDetailViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){

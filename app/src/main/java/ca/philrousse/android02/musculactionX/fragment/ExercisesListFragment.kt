@@ -29,7 +29,7 @@ class ExercisesListFragment : Fragment() {
     private val vm: ListViewModel by viewModels()
     private val binding get() = _binding!!
     private var personalSubCat: Long? = null
-    val args: ExercisesListFragmentArgs by navArgs()
+    private val args: ExercisesListFragmentArgs by navArgs()
 
 
 

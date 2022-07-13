@@ -9,12 +9,12 @@ import ca.philrousse.android02.musculaction.data.entity.views.CategoryExercisesC
 import ca.philrousse.android02.musculaction.data.entity.views.ExerciseView
 import kotlinx.coroutines.flow.Flow
 
+private const val TAG = "MusculactionDAO"
 
 @Dao
 interface MusculactionDAO {
 
-    val TAG: String
-        get() = "MuscualactionDAO"
+
 
     @Transaction
     @Query("SELECT * FROM Category")
@@ -47,10 +47,10 @@ interface MusculactionDAO {
     fun insert(item: Subcategory):Long
 
     @Delete
-    public fun delete(vararg exerciseDetails: ExerciseDetail)
+    fun delete(vararg exerciseDetails: ExerciseDetail)
 
     @Delete
-    public fun delete(exercise: Exercise)
+    fun delete(exercise: Exercise)
 
     fun insert(item: ExerciseView, parentId:Long? = null):Long{
 
