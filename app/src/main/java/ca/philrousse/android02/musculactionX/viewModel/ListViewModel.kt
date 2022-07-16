@@ -5,10 +5,7 @@ import androidx.lifecycle.viewModelScope
 import ca.philrousse.android02.musculaction.data.IMusculactionRepository
 import ca.philrousse.android02.musculaction.data.InsertOrUpdate
 import ca.philrousse.android02.musculaction.data.entity.Exercise
-import ca.philrousse.android02.musculaction.data.entity.views.CardCategory
-import ca.philrousse.android02.musculaction.data.entity.views.CardExerciseDetail
-import ca.philrousse.android02.musculaction.data.entity.views.CategoryExercisesCollections
-import ca.philrousse.android02.musculaction.data.entity.views.ExerciseView
+import ca.philrousse.android02.musculaction.data.entity.views.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,14 +22,14 @@ class ListViewModel @Inject internal constructor(
     private val musculactionRepository: IMusculactionRepository
 ) : ViewModel() {
 
-    val categoryList: Flow<List<CardCategory>> =
+    val categoryList: Flow<List<ICard>> =
         musculactionRepository.getCategoryCards()
 
-    fun exercisesByCategory(categoryId: Long): Flow<CategoryExercisesCollections> {
+    fun exercisesByCategory(categoryId: Long): Flow<IViewCardsCollections> {
         return musculactionRepository.getExerciseCards(categoryId)
     }
 
-    fun exercisesDetail(exerciseId: Long): Flow<ExerciseView> {
+    fun exercisesDetail(exerciseId: Long): Flow<IViewCards> {
         return musculactionRepository.getExerciseDetails(exerciseId)
     }
 
@@ -49,7 +46,7 @@ class ListViewModel @Inject internal constructor(
 class EditViewModel @Inject internal constructor(
     private val musculactionRepository: IMusculactionRepository
 ) : ViewModel() {
-    private val removedSection = mutableListOf<CardExerciseDetail>()
+    private val removedSection = mutableListOf<ICard>()
 
     private val _editedExercise = MutableStateFlow<ExerciseView?>(null)
     val editedExercise = _editedExercise.asStateFlow()
@@ -100,7 +97,8 @@ class EditViewModel @Inject internal constructor(
     fun hookViewModel(exerciseId: Long, categoryId: Long){
 
         if(exerciseId == -1L){
-            _editedExercise.value = ExerciseView(parentId = categoryId, image = "ic_baseline_add_24")
+            _editedExercise.value = musculactionRepository.createNewExerciseView(categoryId)
+                //ExerciseView(parentId = categoryId, image = "ic_baseline_add_24")
         } else{
             viewModelScope.launch {
                 musculactionRepository.getExerciseDetails(exerciseId).collect{
@@ -118,12 +116,13 @@ class EditViewModel @Inject internal constructor(
     fun addSection(){
         editedExercise.value?.let {
             val newList = sections.value.toMutableList()
-            newList.add(CardExerciseDetail("Nouvelle section #${newList.count()+1}",it.id))
+            newList.add(musculactionRepository.createNewCardExerciseDetail(it.id))
+//            newList.add(CardExerciseDetail("Nouvelle section #${newList.count()+1}",it.id))
             _sections.value = newList
         }
 
     }
-    fun removeSection(section:CardExerciseDetail){
+    fun removeSection(section:ICard){
         removedSection.add(section)
         val newList = sections.value.toMutableList()
         newList.remove(section)

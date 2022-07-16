@@ -16,7 +16,7 @@ data class Image(
     val id:String,
     var smallResource:String?=null,
     var resource:String?=null
-){
+) : IDataImage {
     fun update(other:Image){
         if(other.id == id){
             other.smallResource?.also {
@@ -64,7 +64,7 @@ data class Image(
             ResourcesCompat.getDrawable(context.resources,it,null)
         }
     }
-    fun getDrawable(context: Context,default:Drawable?):Drawable?{
+    override fun getDrawable(context: Context, default:Drawable?):Drawable?{
         return getDrawable(context, getResourceId(context)) ?: default
     }
     fun getSmallestDrawable(context:Context):Drawable?{
@@ -78,12 +78,12 @@ data class Image(
 @Entity
 data class Category(
     override var name:String="",
-    var description:String="",
-    var imageID:String?=null,
+    override var description:String="",
+    override var imageID:String?=null,
     @PrimaryKey(autoGenerate = true)
     override val id:Long?=null,
-    val isUserGenerated:Boolean = true
-):IListElement{
+    override val isUserGenerated:Boolean = true
+): IDataCategory {
     override fun toString(): String {
         return "Category[#$id](name=$name, imageId=$imageID)"
     }
@@ -95,8 +95,8 @@ data class Subcategory(
     var parentId:Long?=null,
     @PrimaryKey(autoGenerate = true)
     override val id:Long?=null,
-    val isUserGenerated:Boolean = true
-):IListElement{
+    override val isUserGenerated:Boolean = true
+): IDataSubcategory {
     override fun toString(): String {
         return "Subcategory[#$id](name=$name, parentId=${parentId})"
     }
@@ -111,14 +111,14 @@ data class Subcategory(
 )
 data class Exercise(
     override var name:String="",
-    var short_description:String="",
-    var description:String="",
-    var imageID:String?=null,
+    override var short_description:String="",
+    override var description:String="",
+    override var imageID:String?=null,
     var parentId:Long?=null,
     @PrimaryKey(autoGenerate = true)
     override val id:Long?=null,
-    val isUserGenerated:Boolean = true
-):IListElement{
+    override val isUserGenerated:Boolean = true
+): IDataExercise {
     override fun toString(): String {
         return "Exercise[#$id](name=$name, imageId=$imageID, parentId=${parentId})"
     }
@@ -130,12 +130,12 @@ data class Exercise(
     onDelete = ForeignKey.CASCADE)])
 data class ExerciseDetail(
     override var name:String="",
-    var description:String="",
+    override var description:String="",
     var parentId:Long?=null,
     @PrimaryKey(autoGenerate = true)
     override val id:Long?=null,
-    val isUserGenerated:Boolean = true
-):IListElement{
+    override val isUserGenerated:Boolean = true
+): IDataExerciseDetail {
     override fun toString(): String {
         return "ExerciseDetail[#$id](name=$name, parentId=${parentId})"
     }
@@ -146,12 +146,12 @@ data class ExerciseDetail(
     childColumns = arrayOf("parentId"),
     onDelete = ForeignKey.CASCADE)])
 data class ExerciseDetailVideo (
-    var videoUrl:String="",
+    override var videoUrl:String="",
     var parentId:Long?=null,
     @PrimaryKey(autoGenerate = true)
-    val id:Long?=null,
-    val isUserGenerated:Boolean = true
-){
+    override val id:Long?=null,
+    override val isUserGenerated:Boolean = true
+) : IDataExerciseDetailVideo {
     override fun toString(): String {
         return "ExerciseDetailVideo[#$id](videoUrl=$videoUrl, parentId=${parentId})"
     }
