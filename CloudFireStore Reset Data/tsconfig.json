@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "target": "es2017",
+        "module": "Node16",
+        "resolveJsonModule": true,               // json imports
+        "esModuleInterop": true,                 // import common modules as ES6 Modules
+        "allowSyntheticDefaultImports": true,    // support typesystem compatibility
+    }
+}

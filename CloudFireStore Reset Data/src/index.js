@@ -16,6 +16,19 @@ const jsonFile = '../data/local/src/main/assets/muculaction_data.json';
 
 const isDebug = false
 
+async function parseCategory(db, data, batch) {
+    const collectionRef = db.collection('category');
+    const categories = data.category;
+    const batch = db.batch();
+    for (const key in data) {
+        if (Object.hasOwnProperty.call(data, key)) {
+            const element = data[key];
+            const docRef = collectionRef.doc(key);
+            batch.set(docRef, element);
+        }
+    }
+    return batch.commit();
+}
 async function parseDocument(obj, docRef) {
     const PromiseList = [];
     const doc = {};
