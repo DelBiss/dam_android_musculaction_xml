@@ -2,7 +2,7 @@ package ca.philrousse.android02.musculaction.data.local.json
 
 import android.util.Log
 import ca.philrousse.android02.musculaction.data.entity.*
-import ca.philrousse.android02.musculaction.data.local.database.MusculactionDAO
+import ca.philrousse.android02.musculaction.data.local.database.MusculactionLocalDAO
 
 class MAJson(private val data:List<MAJsonCategory>){
 
@@ -24,7 +24,7 @@ class MAJson(private val data:List<MAJsonCategory>){
         return imagesMap.values.toSet()
     }
 
-    fun insert(dao: MusculactionDAO){
+    fun insert(dao: MusculactionLocalDAO){
         collectUniqueImageEntity().forEach {
             dao.insert(it)
         }
@@ -100,7 +100,7 @@ data class MAJsonCategory(
         return returnList
     }
 
-    fun insert(dao: MusculactionDAO){
+    fun insert(dao: MusculactionLocalDAO){
         val id = dao.insert(entity)
         //Add an empty category for personal exercise
         val subCatPersonnel = Subcategory(
@@ -135,7 +135,7 @@ data class MAJsonSubcategory(
         return returnList
     }
 
-    fun insert(dao: MusculactionDAO, parentId:Long){
+    fun insert(dao: MusculactionLocalDAO, parentId:Long){
         this.parentId = parentId
         val id = dao.insert(entity)
         exercises.forEach {
@@ -165,7 +165,7 @@ data class MAJsonExercise(
         )
     }
 
-    fun insert(dao: MusculactionDAO, parentId:Long){
+    fun insert(dao: MusculactionLocalDAO, parentId:Long){
         this.parentId = parentId
         val id = dao.insert(entity)
         sections.forEach {
@@ -202,7 +202,7 @@ data class MAJsonSection(
         )
     }
 
-    fun insert(dao: MusculactionDAO, parentId:Long){
+    fun insert(dao: MusculactionLocalDAO, parentId:Long){
         this.parentId = parentId
         val id = dao.insert(entity)
         video?.forEach {

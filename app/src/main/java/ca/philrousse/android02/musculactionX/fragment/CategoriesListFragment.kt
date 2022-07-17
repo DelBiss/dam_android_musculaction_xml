@@ -4,6 +4,7 @@ package ca.philrousse.android02.musculactionX.fragment
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -20,7 +21,7 @@ import ca.philrousse.android02.musculactionX.databinding.FragmentListBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-
+private const val TAG = "CategoriesListFragment"
 /**
  * A simple [Fragment] subclass as the default destination in the navigation. TTT
  */
@@ -91,7 +92,9 @@ class CategoriesListFragment : Fragment() {
     private fun hookRecycleView(){
         val recyclerView: RecyclerView = binding.recyclerView
         val adapter = CardsAdapter {
+            Log.d(TAG, "hookRecycleView: $it")
             it.id?.let { categoryId ->
+                
                 val action = CategoriesListFragmentDirections.actionDetailCategory(categoryId,it.name)
                 findNavController().navigate(action)
             }
@@ -101,7 +104,7 @@ class CategoriesListFragment : Fragment() {
         recyclerView.adapter = adapter
 
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
+//            repeatOnLifecycle(Lifecycle.State.STARTED) {
                 vm.categoryList.collect {
                     if (it.isNotEmpty()) {
                         adapter.submitList(it as List<ICard>)
@@ -109,7 +112,7 @@ class CategoriesListFragment : Fragment() {
                         adapter.submitList(null)
                     }
                 }
-            }
+//            }
         }
     }
 

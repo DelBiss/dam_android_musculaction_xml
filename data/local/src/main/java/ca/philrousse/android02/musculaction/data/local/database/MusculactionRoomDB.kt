@@ -14,7 +14,7 @@ import ca.philrousse.android02.musculaction.data.local.database.MusculactionData
 
 @Database(entities = [Category::class,Exercise::class,ExerciseDetail::class,ExerciseDetailVideo::class,Subcategory::class, Image::class], version = 1, exportSchema = false)
 abstract class MusculactionRoomDB: RoomDatabase() {
-    abstract fun dao(): MusculactionDAO
+    abstract fun dao(): MusculactionLocalDAO
 
     companion object {
         private const val JSON_FILE = "musculaction_data.json"

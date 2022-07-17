@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 private const val TAG = "MusculactionDAO"
 
 @Dao
-interface MusculactionDAO {
+interface MusculactionLocalDAO {
 
 
 
