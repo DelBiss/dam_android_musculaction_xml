@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 
 
 /**
- * A simple [Fragment] subclass as the default destination in the navigation.
+ * A simple [Fragment] subclass as the default destination in the navigation. TTT
  */
 @AndroidEntryPoint
 class CategoriesListFragment : Fragment() {
