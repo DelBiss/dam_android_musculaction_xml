@@ -1,6 +1,7 @@
 package ca.philrousse.android02.musculaction.data.entity.views
 
 import androidx.recyclerview.widget.DiffUtil
+import ca.philrousse.android02.musculaction.data.entity.IDataImage
 import ca.philrousse.android02.musculaction.data.entity.Image
 
 class ListComparator<T: IListElement>:DiffUtil.ItemCallback<T>(){
@@ -12,14 +13,15 @@ class ListComparator<T: IListElement>:DiffUtil.ItemCallback<T>(){
 
 }
 
-interface IListElement{
+interface IListElement {
     val name:String
     val id:Long?
     override fun equals(other: Any?): Boolean
+
 }
 
 interface IImageDescription:IListElement{
-    val image: Image?
+    val image: IDataImage?
     val description:String?
 }
 
@@ -27,7 +29,7 @@ interface ICard: IImageDescription {
     val video: String?
 }
 
-interface ICardsCollection: IListElement {
+interface ICardsCollection:IListElement {
     val child:List<ICard>
 }
 

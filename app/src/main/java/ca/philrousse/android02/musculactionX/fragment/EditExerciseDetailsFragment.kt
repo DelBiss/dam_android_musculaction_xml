@@ -10,12 +10,10 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
-import ca.philrousse.android02.musculaction.data.InsertOrUpdate
 import ca.philrousse.android02.musculactionX.R
 import ca.philrousse.android02.musculactionX.adapter.ExerciseDetailSectionEditAdapter
 import ca.philrousse.android02.musculactionX.databinding.FragmentEditExerciseBinding
 import ca.philrousse.android02.musculactionX.viewModel.EditViewModel
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

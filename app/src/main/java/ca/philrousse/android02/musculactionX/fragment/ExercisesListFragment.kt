@@ -28,8 +28,8 @@ class ExercisesListFragment : Fragment() {
     private var _binding: FragmentHeaderAndListBinding? = null
     private val vm: ListViewModel by viewModels()
     private val binding get() = _binding!!
-    private var personalSubCat: Long? = null
-    val args: ExercisesListFragmentArgs by navArgs()
+//    private var personalSubCat: Long? = null
+    private val args: ExercisesListFragmentArgs by navArgs()
 
 
 
@@ -48,10 +48,10 @@ class ExercisesListFragment : Fragment() {
     }
 
     private fun addNew(){
-        personalSubCat?.let {
-            val action = ExercisesListFragmentDirections.actionAddExercices(subcategoryId = it)
-            findNavController().navigate(action)
-        }
+//        personalSubCat?.let {
+//            val action = ExercisesListFragmentDirections.actionAddExercices(subcategoryId = it)
+//            findNavController().navigate(action)
+//        }
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -78,9 +78,9 @@ class ExercisesListFragment : Fragment() {
                     binding.data = categoryExercisesCollections
                     val subcategories = categoryExercisesCollections.child
 
-                    personalSubCat = subcategories.firstOrNull {
-                        it.subcategory.isUserGenerated
-                    }?.id
+//                    personalSubCat = subcategories.firstOrNull {
+//                        it.subcategory.isUserGenerated
+//                    }?.id
 
                     if (subcategories.isNotEmpty()) {
                         adapter.submitList(subcategories as List<ICardsCollection>)

@@ -1,6 +1,5 @@
 package ca.philrousse.android02.musculactionX.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,10 +11,10 @@ import ca.philrousse.android02.musculaction.data.entity.views.ListComparator
 import ca.philrousse.android02.musculactionX.R
 import ca.philrousse.android02.musculactionX.databinding.LayoutEditSectionBinding
 
-class ExerciseDetailSectionEditAdapter(private val onClick: (CardExerciseDetail) -> Unit = {}):
-    ListAdapter<CardExerciseDetail, ExerciseDetailSectionEditAdapter.ExerciseDetailSectionEditViewHolder>(ListComparator<CardExerciseDetail>()){
+class ExerciseDetailSectionEditAdapter(private val onClick: (ICard) -> Unit = {}):
+    ListAdapter<ICard, ExerciseDetailSectionEditAdapter.ExerciseDetailSectionEditViewHolder>(ListComparator<ICard>()){
 
-        class ExerciseDetailSectionEditViewHolder(itemView: View, private val onClick: (CardExerciseDetail) -> Unit): RecyclerView.ViewHolder(itemView){
+        class ExerciseDetailSectionEditViewHolder(itemView: View, private val onClick: (ICard) -> Unit): RecyclerView.ViewHolder(itemView){
             private var binding: LayoutEditSectionBinding
 
 
@@ -29,7 +28,7 @@ class ExerciseDetailSectionEditAdapter(private val onClick: (CardExerciseDetail)
                 }
             }
 
-            fun bind(item: CardExerciseDetail){
+            fun bind(item: ICard){
                 binding.data = item
             }
         }

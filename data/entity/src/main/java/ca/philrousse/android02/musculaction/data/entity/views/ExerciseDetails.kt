@@ -41,10 +41,6 @@ data class ExerciseView(
         set(value) {
             exercise.description = value
         }
-
-    fun insert(insertFct: (Exercise) -> Unit = {}){
-
-    }
 }
 
 data class CardExerciseDetail(

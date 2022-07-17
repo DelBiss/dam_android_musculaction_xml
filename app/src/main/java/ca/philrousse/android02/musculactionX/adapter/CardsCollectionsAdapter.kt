@@ -37,7 +37,7 @@ class CardsCollectionsAdapter(private val newCallback: () -> Unit = {}, private 
                 CardsAdapter{
                     newCallback()
                 }.also {
-                    it.submitList(listOf(EmptyCard("Ajouter un exercise personnel")))
+                    it.submitList(listOf(EmptyCard(context.getString(R.string.new_card_title))))
                 }
             }
         }
