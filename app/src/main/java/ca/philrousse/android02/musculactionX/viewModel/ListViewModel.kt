@@ -82,11 +82,11 @@ class EditViewModel @Inject internal constructor(
     }
 
     fun commitChange(callback: ((InsertOrUpdate)->Unit)? = null) = CoroutineScope(Dispatchers.IO).launch {
-        removedSection.forEach {
-            it.id?.let { _ ->
-                musculactionRepository.delete(it.detail)
-            }
-        }
+//        removedSection.forEach {
+//            it.id?.let { _ ->
+//                musculactionRepository.delete(it.detail)
+//            }
+//        }
         val commitResult = editedExercise.value?.let { musculactionRepository.insertOrUpdate(it) } ?: InsertOrUpdate.FAIL
         callback?.let {
             it(commitResult)
