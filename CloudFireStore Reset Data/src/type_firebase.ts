@@ -11,7 +11,7 @@ export interface ICategories extends Childs<ICategory> {}
 
 export interface ICategory  {
     asDocumentData (): DocumentData
-    title: string
+    name: string
     image?: string
     description: string
     exercises: Childs<IExercise>
@@ -19,17 +19,18 @@ export interface ICategory  {
 
 export interface IExercise  {
     asDocumentData (): DocumentData
-    title: string
+    name: string
     image?: string
     short_description: string
     subcategory: string
     description: string
-    details: IExercise_Detail[]
+    details: Childs<IExercise_Detail>
 }
 
 export interface IExercise_Detail {
+    asDocumentData (): DocumentData
     order: number
-    title: string
+    name: string
     description: string
     video?: string
   }

@@ -25,15 +25,15 @@ class ListViewModel @Inject internal constructor(
     val categoryList: Flow<List<ICard>> =
         musculactionRepository.getCategoryCards()
 
-    fun exercisesByCategory(categoryId: Long): Flow<IViewCardsCollections> {
+    fun exercisesByCategory(categoryId: String): Flow<IViewCardsCollections> {
         return musculactionRepository.getExerciseCards(categoryId)
     }
 
-    fun exercisesDetail(exerciseId: Long): Flow<IViewCards> {
+    fun exercisesDetail(exerciseId: String): Flow<IViewCards> {
         return musculactionRepository.getExerciseDetails(exerciseId)
     }
 
-    fun deleteExercise(exercise: Exercise, callback: ((Boolean) -> Unit)? = null) = CoroutineScope(Dispatchers.IO).launch {
+    fun deleteExercise(exercise: IImageDescription, callback: ((Boolean) -> Unit)? = null) = CoroutineScope(Dispatchers.IO).launch {
         musculactionRepository.delete(exercise)
         callback?.let { cb ->
             cb(true)
@@ -48,10 +48,10 @@ class EditViewModel @Inject internal constructor(
 ) : ViewModel() {
     private val removedSection = mutableListOf<ICard>()
 
-    private val _editedExercise = MutableStateFlow<ExerciseView?>(null)
+    private val _editedExercise = MutableStateFlow<IViewCards?>(null)
     val editedExercise = _editedExercise.asStateFlow()
 
-    private val _sections = MutableStateFlow<List<CardExerciseDetail>>(listOf())
+    private val _sections = MutableStateFlow<List<ICard>>(listOf())
     val sections = _sections.asStateFlow()
 
 //    private var isLoading = MutableStateFlow(true)
@@ -71,7 +71,7 @@ class EditViewModel @Inject internal constructor(
         var isSuccess = false
         editedExercise.value?.let {
             it.id?.let { _->
-                musculactionRepository.delete(it.exercise)
+                musculactionRepository.delete(it)
                 isSuccess = true
             }
         }
@@ -82,11 +82,11 @@ class EditViewModel @Inject internal constructor(
     }
 
     fun commitChange(callback: ((InsertOrUpdate)->Unit)? = null) = CoroutineScope(Dispatchers.IO).launch {
-//        removedSection.forEach {
-//            it.id?.let { _ ->
-//                musculactionRepository.delete(it.detail)
-//            }
-//        }
+        removedSection.forEach {
+            it.id?.let { _ ->
+                musculactionRepository.delete(it)
+            }
+        }
         val commitResult = editedExercise.value?.let { musculactionRepository.insertOrUpdate(it) } ?: InsertOrUpdate.FAIL
         callback?.let {
             it(commitResult)
@@ -94,9 +94,9 @@ class EditViewModel @Inject internal constructor(
     }
 
 
-    fun hookViewModel(exerciseId: Long, categoryId: Long){
+    fun hookViewModel(exerciseId: String, categoryId: String){
 
-        if(exerciseId == -1L){
+        if(exerciseId == ""){
             _editedExercise.value = musculactionRepository.createNewExerciseView(categoryId)
                 //ExerciseView(parentId = categoryId, image = "ic_baseline_add_24")
         } else{
@@ -115,8 +115,9 @@ class EditViewModel @Inject internal constructor(
 
     fun addSection(){
         editedExercise.value?.let {
+
             val newList = sections.value.toMutableList()
-            newList.add(musculactionRepository.createNewCardExerciseDetail(it.id))
+            newList.add(musculactionRepository.createNewCardExerciseDetail())
 //            newList.add(CardExerciseDetail("Nouvelle section #${newList.count()+1}",it.id))
             _sections.value = newList
         }

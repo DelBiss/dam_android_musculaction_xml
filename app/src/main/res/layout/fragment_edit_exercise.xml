@@ -11,7 +11,7 @@
             type="Boolean" />
         <variable
             name="data"
-            type="ca.philrousse.android02.musculaction.data.entity.views.ExerciseView" />
+            type="ca.philrousse.android02.musculaction.data.entity.views.IViewCards" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -86,7 +86,7 @@
                         android:inputType="textMultiLine|text"
                         android:minLines="3"
                         android:selectAllOnFocus="false"
-                        android:text="@={data.exercise.short_description}"
+                        android:text="@={data.short_description}"
                         tools:text="Du text" />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout

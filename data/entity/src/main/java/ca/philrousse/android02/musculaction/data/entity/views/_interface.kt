@@ -14,41 +14,39 @@ class ListComparator<T: IListElement>:DiffUtil.ItemCallback<T>(){
 }
 
 interface IListElement {
-    val name:String
-    val id:Long?
+    var name:String
+    val id: String?
     override fun equals(other: Any?): Boolean
 
 }
 
 interface IImageDescription:IListElement{
     val image: IDataImage?
-    val description:String?
+    var description: String
+    var short_description: String?
 }
 
 interface ICard: IImageDescription {
-    val video: String?
+    var video: String?
+
 }
 
 interface ICardsCollection:IListElement {
-    val child:List<ICard>
+    var child:List<ICard>
 }
 
 interface IViewCardsCollections: IImageDescription {
-    val child:List<ICardsCollection>
+    var child:List<ICardsCollection>
 }
 
 interface IViewCards: IImageDescription {
-    val child:List<ICard>
+    var child:List<ICard>
 }
 
-data class  EmptyCard(override val name: String) :ICard{
-    override val video: String?
-        get() = null
-    override val image: Image?
-        get() = null
-    override val description: String?
-        get() = null
-    override val id: Long?
-        get() = null
-
+data class  EmptyCard(override var name: String) :ICard{
+    override var video: String? = null
+    override var short_description: String? = null
+    override val image: Image? = null
+    override var description: String = ""
+    override val id: String? = null
 }

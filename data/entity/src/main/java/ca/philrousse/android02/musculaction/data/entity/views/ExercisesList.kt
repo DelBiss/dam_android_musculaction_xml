@@ -21,14 +21,17 @@ data class CategoryExercisesCollections(
         entity = Subcategory::class
     )
 
-    override val child: List<SubcategoryExercisesCardsCollection> = listOf()
+    override var child: List<ICardsCollection> = listOf()
 ): IViewCardsCollections {
-    override val id: Long?
+    override val id: String?
         get() = category.id
-    override val name: String
+    override var name: String
         get() = category.name
-    override val description: String
+        set(value) {category.name = value}
+    override var description: String
         get() = category.description
+        set(value) {category.description = value}
+    override var short_description: String?=null
 }
 
 data class SubcategoryExercisesCardsCollection(
@@ -39,12 +42,13 @@ data class SubcategoryExercisesCardsCollection(
         entityColumn = "parentId",
         entity = Exercise::class
     )
-    override val child:List<CardExercise> = listOf()
+    override var child: List<ICard> = listOf()
 ): ICardsCollection {
-    override val id: Long?
+    override val id: String?
         get() = subcategory.id
-    override val name: String
+    override var name: String
         get() = subcategory.name
+        set(value) {subcategory.name = value}
 }
 
 data class CardExercise(
@@ -58,12 +62,17 @@ data class CardExercise(
     )
     override val image: Image?
 ): ICard {
-    override val id: Long?
+    override val id: String?
         get() = exercise.id
-    override val name: String
+    override var name: String
         get() = exercise.name
-    override val description: String
+        set(value) {exercise.name = value}
+    override var description: String
+        get() = exercise.description
+        set(value) {exercise.description = value}
+    override var video: String? = null
+    override var short_description: String?
         get() = exercise.short_description
-    override val video: String?
-        get() = null
+        set(value) {exercise.short_description = value?:""}
+
 }

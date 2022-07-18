@@ -64,10 +64,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="@{data.description}"
+                    android:text='@{data.short_description}'
                     android:textAppearance="?attr/textAppearanceBodyMedium"
                     android:textColor="?android:attr/textColorSecondary"
-                    android:visibility='@{((data.description != "") &amp;&amp; (!hideDescription)) ? View.VISIBLE : View.GONE}'
+                    android:visibility='@{(((data.short_description != "")) &amp;&amp; (!hideDescription)) ? View.VISIBLE : View.GONE}'
                     tools:text="Un bon exercice pour le grand droit des abdominaux. Il a la réputation de solliciter le bas des abdos, là ou le crunch classique vise plus le haut. On peut le réaliser à l'aide d'un banc ou au sol…"
                     tools:visibility="gone" />
 

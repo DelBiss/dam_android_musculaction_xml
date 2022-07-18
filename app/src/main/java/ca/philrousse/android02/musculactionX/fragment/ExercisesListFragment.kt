@@ -48,10 +48,10 @@ class ExercisesListFragment : Fragment() {
     }
 
     private fun addNew(){
-//        personalSubCat?.let {
-//            val action = ExercisesListFragmentDirections.actionAddExercices(subcategoryId = it)
-//            findNavController().navigate(action)
-//        }
+        args.categoryId?.let {
+            val action = ExercisesListFragmentDirections.actionAddExercices(exerciseId="", subcategoryId = it)
+            findNavController().navigate(action)
+        }
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

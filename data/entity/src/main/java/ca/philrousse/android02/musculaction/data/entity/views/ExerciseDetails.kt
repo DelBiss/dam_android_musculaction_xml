@@ -23,12 +23,12 @@ data class ExerciseView(
         entityColumn = "parentId",
         entity = ExerciseDetail::class
     )
-    override var child:List<CardExerciseDetail> = listOf()
+    override var child: List<ICard> = listOf()
 ): IViewCards {
 
-    constructor(parentId:Long, image: String?=null):this(Exercise(parentId = parentId, imageID = image))
+    constructor(parentId:String, image: String?=null):this(Exercise(parentId = parentId, imageID = image))
 
-    override val id: Long?
+    override val id: String?
         get() = exercise.id
 
     override var name: String
@@ -40,6 +40,13 @@ data class ExerciseView(
         get() = exercise.description
         set(value) {
             exercise.description = value
+        }
+    override var short_description: String?
+        get() = exercise.short_description
+        set(value) {
+            if (value != null) {
+                exercise.short_description = value
+            }
         }
 }
 
@@ -54,8 +61,8 @@ data class CardExerciseDetail(
     )
     var videosList:List<ExerciseDetailVideo> = listOf()
 ): ICard {
-    constructor(name:String, parentId: Long?):this(ExerciseDetail(name, parentId = parentId))
-    override val id: Long?
+    constructor(name:String, parentId: String?):this(ExerciseDetail(name, parentId = parentId))
+    override val id: String?
         get() = detail.id
     override var name: String
         get() = detail.name
@@ -82,4 +89,5 @@ data class CardExerciseDetail(
                 }
             }
         }
+    override var short_description: String? = null
 }

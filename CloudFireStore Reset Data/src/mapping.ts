@@ -12,7 +12,7 @@ export function JsonToData(jsData: JS_Categories): ICategories {
     const fbData: ICategories = {};
     for (const category of jsData) {
         fbData[category.title] = {
-            title: category.title,
+            name: category.title,
             image: JS_ImageToString(category.image),
             description: category.description,
             exercises: {},
@@ -22,21 +22,25 @@ export function JsonToData(jsData: JS_Categories): ICategories {
 
             for (const exercise of subcategory.exercises) {
                 fbData[category.title].exercises[exercise.title] = {
-                    title: exercise.title,
+                    name: exercise.title,
                     subcategory: subcategory.title,
                     image: JS_ImageToString(exercise.image),
                     short_description: exercise.short_description,
                     description: exercise.description,
-                    details: exercise.sections.map((section, index) => {
-                        return {
-                            order: index,
-                            title: section.title,
-                            description: section.content,
-                            video: section.video ? section.video[0] : undefined
-                        }
-                    }),
+                    details: {},
                     asDocumentData: () => ExerciseToDocumentData(fbData[category.title].exercises[exercise.title])
                 };
+                for (let index = 0; index < exercise.sections.length; index++) {
+                    const section = exercise.sections[index];
+                    fbData[category.title].exercises[exercise.title].details[section.title] = {
+                        order: index,
+                        name: section.title,
+                        description: section.content,
+                        video: section.video ? section.video[0] : undefined,
+                        asDocumentData: () => ExerciseDetailToDocumentData(fbData[category.title].exercises[exercise.title].details[section.title])
+                    }
+
+                }
             }
         }
     }
@@ -46,27 +50,27 @@ export function JsonToData(jsData: JS_Categories): ICategories {
 
 function CategoryToDocumentData(category: ICategory): DocumentData {
     return {
-        title: category.title,
-        image: category.image,
+        name: category.name,
+        imageID: category.image,
         description: category.description
     }
 }
 
 function ExerciseToDocumentData(exercise: IExercise): DocumentData {
     return {
-        title: exercise.title,
+        name: exercise.name,
         subcategory: exercise.subcategory,
-        image: exercise.image,
+        imageID: exercise.image,
         short_description: exercise.short_description,
         description: exercise.description,
-        details: exercise.details.map(ExerciseDetailToDocumentData)
+        // details: exercise.details.map(ExerciseDetailToDocumentData)
     }
 }
 
 function ExerciseDetailToDocumentData(detail: IExercise_Detail): DocumentData {
     return {
         order: detail.order,
-        title: detail.title,
+        name: detail.name,
         description: detail.description,
         video: detail.video ? detail.video : ""
     }

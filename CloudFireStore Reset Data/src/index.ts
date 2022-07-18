@@ -5,7 +5,7 @@ import { BatchProcessor } from "./batchProcessor";
 
 import * as serviceAccount from './dam-android02-musculaction-6a25aace2dbb.json';
 import { JsonToData } from "./mapping";
-import { Childs, ICategories, IExercise } from "./type_firebase";
+import { Childs, ICategories, IExercise, IExercise_Detail } from "./type_firebase";
 import { JS_Categories } from "./type_json";
 
 const resolve = require('path').resolve
@@ -15,7 +15,7 @@ initializeApp({
     credential: cert(serviceAccount as ServiceAccount)
 });
 
-const jsonFile = '../data/local/src/main/assets/muculaction_data.json';
+const jsonFile = '../data/local/src/main/assets/musculaction_data.json';
 const isDebug = false;
 const jsonData: JS_Categories = JSON.parse(fs.readFileSync(jsonFile, 'utf8'));
 const firebaseData = JsonToData(jsonData);
@@ -53,10 +53,20 @@ async function parseExercise(firebaseData: Childs<IExercise>, collection: Collec
             const exercise = firebaseData[key];
             const ref = collection.doc(key);
             await batch.add(ref, exercise.asDocumentData());
+            parseDetail(exercise.details, ref.collection('details'), batch);
         }
     }
 }
 
+async function parseDetail(firebaseData: Childs<IExercise_Detail>, collection: CollectionReference, batch: BatchProcessor) {
+    for (const key in firebaseData) {
+        if (Object.prototype.hasOwnProperty.call(firebaseData, key)) {
+            const detail = firebaseData[key];
+            const ref = collection.doc(key);
+            await batch.add(ref, detail.asDocumentData());
+        }
+    }
+}
 async function DeleteCollection(collectionRef: CollectionReference, batch: BatchProcessor) {
     const query = collectionRef.limit(1000);
     const promesse = collectionRef.get()

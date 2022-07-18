@@ -45,7 +45,7 @@ class ExerciseDetailsFragment : Fragment() {
     }
 
     private fun edit(){
-        val action = ExerciseDetailsFragmentDirections.actionEditDetail(exerciseId = arg.exerciseId)
+        val action = ExerciseDetailsFragmentDirections.actionEditDetail(exerciseId = arg.exerciseId, subcategoryId = "")
         findNavController().navigate(action)
     }
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -68,10 +68,10 @@ class ExerciseDetailsFragment : Fragment() {
     }
 
     private fun deleteExercise(){
-        vm.deleteExercise((binding.data as ExerciseView).exercise){}
-        findNavController().navigateUp()
-
-
+        binding.data?.also {
+            vm.deleteExercise(it) {}
+            findNavController().navigateUp()
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

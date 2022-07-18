@@ -1,244 +1,202 @@
 package ca.philrousse.android02.musculaction.remote
 
+import android.content.Context
+import android.graphics.drawable.Drawable
 import android.util.Log
+import androidx.core.content.res.ResourcesCompat
 import ca.philrousse.android02.musculaction.data.entity.*
 import ca.philrousse.android02.musculaction.data.entity.views.*
-import com.google.firebase.firestore.QueryDocumentSnapshot
-import kotlinx.coroutines.flow.*
+import com.google.firebase.firestore.*
 
 private const val TAG = "DocumentData"
 
-class PathIdDirectory{
-    class PathIdType{
-        private val reference = mutableMapOf<String,Long>()
-        private var current:Long = 1L
-        fun getId(path:String):Long{
-            return reference[path] ?: kotlin.run {
-                current.also {
-                    reference[path] = it
-                    current += 1
-                }
-            }
-        }
-
-        fun getPath(id: Long):String?{
-            return reference.filter {
-                it.value == id
-            }.keys.firstOrNull()
-        }
-
-        override fun toString(): String {
-            return reference.toString()
-        }
-    }
-
-    val directory = mutableMapOf<String,PathIdType>()
-
-    fun getPath(type: String, id: Long):String?{
-        return getForType(type).getPath(id)
-    }
-
-    fun getId(type: String, path: String):Long{
-        return getForType(type).getId(path)
-    }
-
-    private fun getForType(type:String):PathIdType{
-        return directory[type] ?: kotlin.run {
-            PathIdType().also {
-                directory[type] = it
-            }
-        }
-    }
-
-    companion object {
-        @Volatile
-        private var instance: PathIdDirectory? = null
-
-        fun getInstance(): PathIdDirectory {
-            return instance ?: synchronized(this) {
-                instance ?: PathIdDirectory().also {
-                    instance = it
-                }
-            }
-        }
-    }
-}
 
 
 abstract class DocumentData (
-    protected val snapshot: QueryDocumentSnapshot
-) {
-    abstract val type:String
-    private val path:String
+    val snapshot: DocumentSnapshot
+):IDataImage {
+    val id:String
         get() = snapshot.reference.path
-    open val id:Long get() = PathIdDirectory.getInstance().getId(type,path)
-}
-
-class ImageDocument(private val snapshot: QueryDocumentSnapshot){
-    val id:String? get() = (snapshot.data["file"] as String?)?.split(".")?.dropLast(1)?.joinToString(separator = ".")
-}
-
-
-class CategoryDocument(snapshot: QueryDocumentSnapshot):DocumentData(snapshot) {
-    override val type: String = "category"
-    private val name: String get() = (snapshot.data["title"] ?: "NoName") as String
-    private val description: String get() = (snapshot.data["description"] ?: "") as String
-    private val isUserGenerated: Boolean get() = (snapshot.data["isUserGenerated"] ?: false) as Boolean
-
-    private fun asCategory(): Flow<Category>{
-        return snapshot.reference.collection("image").getAsFlow().map { qs->
-            Category(
-                name = name,
-                description = description,
-                imageID = qs?.firstOrNull()?.let {
-
-                    ImageDocument(it).id
-                },
-                id = id,
-                isUserGenerated
-            )
-        }
-
+    val image: IDataImage get() =  this
+    open val imageID: String? get() = (snapshot.getString("imageID") ?: "ic_broken_image")
+    open var name:String = snapshot.getString("name")?:"Titre du document"
+    open var description:String = snapshot.getString("description")?:""
+    open var short_description:String? = snapshot.getString("short_description")
+    fun delete(){
+        snapshot.reference.delete()
     }
 
-    fun asCardCategory(): Flow<CardCategory> {
-        return asCategory().map {
-            CardCategory(
-                category = it,
-                image = it.imageID?.let { id -> Image(id,id,id)}
-            )
+    override fun getDrawable(context: Context, default: Drawable?): Drawable? {
+        return context.resources.getIdentifier(
+            "@drawable/$imageID",
+            null,
+            context.packageName
+        )?.let { resourceId: Int ->
+            ResourcesCompat.getDrawable(context.resources,resourceId,null)
         }
     }
 
-    fun asCategoryExercisesCollections():Flow<CategoryExercisesCollections>{
-        return snapshot.combineCollectionListAsFlow("subcategories"){
-            SubcategoryDocument(it).asSubcategoryExercisesCardsCollection()
-        }.filterNotNull().zip(asCategory()){child,cat->
-            CategoryExercisesCollections(
-                category = cat,
-                image = cat.imageID?.let { id -> Image(id,id,id)},
-                child = child
-            )
-        }
 
+
+    override fun hashCode(): Int {
+        var result = id.hashCode()
+        result = 31 * result + name.hashCode()
+        result = 31 * result + description.hashCode()
+        return result
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is DocumentData) return false
+
+        if (id != other.id) return false
+        if (imageID != other.imageID) return false
+        if (name != other.name) return false
+        if (description != other.description) return false
+
+        return true
     }
 }
 
-//
-class VideoDocument(snapshot: QueryDocumentSnapshot):DocumentData(snapshot){
-    override val type: String = "ExerciseDetailVideo"
-    private val videoUrl: String get() = (snapshot.data["value"] ?: "") as String
+class CategoryItemDocument(snapshot: DocumentSnapshot):DocumentData(snapshot), ICard{
+    override var video: String? = null
+    override var short_description: String? = ""
 
-    fun asExerciseDetailVideo(): ExerciseDetailVideo{
-        return ExerciseDetailVideo(
-            videoUrl = videoUrl,
-            id = id
-        )
+    override var description: String
+        get() = ""
+        set(value) {}
+
+
+
+    override fun hashCode(): Int {
+        return super.hashCode()
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is CategoryItemDocument) return false
+        if (!super.equals(other)) return false
+
+        return true
     }
 }
 
-
-class ExerciseDetailDocument(snapshot: QueryDocumentSnapshot):DocumentData(snapshot) {
-    override val type: String = "ExerciseDetail"
-    private val name: String get() = (snapshot.data["title"] ?: "NoName") as String
-    private val description: String get() = (snapshot.data["content"] ?: "") as String
-    private val isUserGenerated: Boolean get() = (snapshot.data["isUserGenerated"] ?: false) as Boolean
-
-    private fun asExerciseDetail(): ExerciseDetail{
-        return ExerciseDetail(
-                name = name,
-                description = description,
-                id = id,
-                isUserGenerated = isUserGenerated
-            )
+class CategoryDetailDocument(snapshot: DocumentSnapshot, exercises:List<ExerciseItemDocument>):DocumentData(snapshot),IViewCardsCollections{
+    override var child: List<ICardsCollection> = exercises.groupBy {
+        it.subcategory
+    }.map { (subcategoryName, child) -> ExerciseGrouping(subcategoryName,child) }
+    override var short_description: String? = null
 
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is CategoryDetailDocument) return false
+        if (!super.equals(other)) return false
+
+        if (child != other.child) return false
+
+        return true
     }
 
-    fun asCardExerciseDetail(): Flow<CardExerciseDetail> {
-        return snapshot.transformCollectionListAsFlow("video") {
-            VideoDocument(it).asExerciseDetailVideo()
-        }.map {
-            CardExerciseDetail(
-                detail = asExerciseDetail(),
-                videosList = it ?: listOf()
-            )
-        }
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + child.hashCode()
+        return result
     }
 }
 
-
-class ExerciseDocument(snapshot: QueryDocumentSnapshot):DocumentData(snapshot) {
-    override val type: String = "Exercise"
-    private val name: String get() = (snapshot.data["title"] ?: "NoName") as String
-    private val description: String get() = (snapshot.data["description"] ?: "") as String
-    private val short_description: String get() = (snapshot.data["short_description"] ?: "") as String
-    private val isUserGenerated: Boolean
-        get() = (snapshot.data["isUserGenerated"] ?: false) as Boolean
-
-    private fun asExercise(): Flow<Exercise> {
-        return snapshot.reference.collection("image").getAsFlow().map { qs->
-            Exercise(
-                name = name,
-                short_description = short_description,
-                description = description,
-                imageID = qs?.firstOrNull()?.let {
-
-                    ImageDocument(it).id
-                },
-                id = id,
-                isUserGenerated = isUserGenerated
-            )
-        }
+data class ExerciseGrouping(override var name: String, override var child: List<ICard>) :ICardsCollection{
+    override val id: String?
+        get() = ""
 
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ExerciseGrouping) return false
+
+        if (name != other.name) return false
+        if (child != other.child) return false
+
+        return true
     }
 
-    fun asCardExercise(): Flow<CardExercise> {
-        return asExercise().map {
-            CardExercise(
-                exercise = it,
-                image = it.imageID?.let { id -> Image(id,id,id)}
-            )
-        }
-    }
-
-    fun asExerciseView(){
-        val a = snapshot.combineCollectionListAsFlow("sections"){
-            ExerciseDetailDocument(it).asCardExerciseDetail()
-        }.combine(asExercise()){ detail, ex ->
-            ExerciseView(
-                exercise = ex,
-                image = ex.imageID?.let { id -> Image(id,id,id)},
-                child = detail ?: listOf()
-            )
-        }
+    override fun hashCode(): Int {
+        var result = name.hashCode()
+        result = 31 * result + child.hashCode()
+        return result
     }
 }
 
-class SubcategoryDocument(snapshot: QueryDocumentSnapshot):DocumentData(snapshot) {
-    override val type: String = "Subcategory"
-    private val name: String get() = (snapshot.data["title"] ?: "NoName") as String
-    private val isUserGenerated: Boolean
-        get() = (snapshot.data["isUserGenerated"] ?: false) as Boolean
+class ExerciseItemDocument(snapshot: DocumentSnapshot):DocumentData(snapshot),ICard{
+    var subcategory:String = snapshot.getString("subcategory")?:"Autre exercises"
+    override var video: String? = null
+    override var short_description: String? = snapshot.getString("short_description")?:"Autre exercises"
 
-    private fun asSubcategory(): Subcategory {
-        return Subcategory(
-            name = name,
-            id = id,
-            isUserGenerated = isUserGenerated
-        )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ExerciseItemDocument) return false
+        if (!super.equals(other)) return false
+
+        if (subcategory != other.subcategory) return false
+
+        return true
     }
 
-    fun asSubcategoryExercisesCardsCollection(): Flow<SubcategoryExercisesCardsCollection> {
-        return snapshot.combineCollectionListAsFlow("exercises"){
-            ExerciseDocument(it).asCardExercise()
-        }.filterNotNull().map {
-            SubcategoryExercisesCardsCollection(
-                subcategory = asSubcategory(),
-                child = it
-            )
-        }
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + subcategory.hashCode()
+        return result
     }
 }
 
+class ExerciseDetailDocument(snapshot: DocumentSnapshot, override var child: List<ICard>):DocumentData(snapshot),IViewCards
+class ExerciseDocumentDetail(snapshot: DocumentSnapshot) :DocumentData(snapshot), ICard {
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + order.hashCode()
+        result = 31 * result + (video?.hashCode() ?: 0)
+        return result
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ExerciseDocumentDetail) return false
+        if (!super.equals(other)) return false
+
+        if (video != other.video) return false
+
+        return true
+    }
+
+    var order:Long = snapshot.getLong("order") ?: -1
+    override var video: String? = if (snapshot.getString("video").isNullOrBlank()) null else snapshot.getString("video")
+    override var short_description: String? = null
+
+}
+
+data class NewExercises(
+    @Exclude var parentId:String,
+    override var name: String = "",
+    override var description:String = "",
+    override var short_description: String? = "",
+    var subcategory:String = "Exercise Personnel",
+    var imageID: String = "ic_baseline_edit_24"
+):IViewCards {
+    @Exclude override val id: String?=null
+    @Exclude override val image: IDataImage? = null
+    @Exclude override var child: List<ICard> = emptyList()
+}
+
+data class NewDetail(
+    override var name: String = "",
+    override var description: String = "",
+    override var video: String? = "",
+    var order: Long = 99L
+):ICard {
+
+    @Exclude override val id: String?=null
+    @Exclude override var short_description: String?=null
+    @Exclude override val image: IDataImage?=null
+}

@@ -8,7 +8,6 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import ca.philrousse.android02.musculaction.data.entity.views.IListElement
 
 @Entity
 data class Image(
@@ -81,7 +80,7 @@ data class Category(
     override var description:String="",
     override var imageID:String?=null,
     @PrimaryKey(autoGenerate = true)
-    override val id:Long?=null,
+    override val id: String? =null,
     override val isUserGenerated:Boolean = true
 ): IDataCategory {
     override fun toString(): String {
@@ -94,7 +93,7 @@ data class Subcategory(
     override var name:String="",
     var parentId:Long?=null,
     @PrimaryKey(autoGenerate = true)
-    override val id:Long?=null,
+    override val id: String? =null,
     override val isUserGenerated:Boolean = true
 ): IDataSubcategory {
     override fun toString(): String {
@@ -114,9 +113,9 @@ data class Exercise(
     override var short_description:String="",
     override var description:String="",
     override var imageID:String?=null,
-    var parentId:Long?=null,
+    var parentId:String?=null,
     @PrimaryKey(autoGenerate = true)
-    override val id:Long?=null,
+    override val id: String? =null,
     override val isUserGenerated:Boolean = true
 ): IDataExercise {
     override fun toString(): String {
@@ -131,9 +130,9 @@ data class Exercise(
 data class ExerciseDetail(
     override var name:String="",
     override var description:String="",
-    var parentId:Long?=null,
+    var parentId:String?=null,
     @PrimaryKey(autoGenerate = true)
-    override val id:Long?=null,
+    override val id: String? =null,
     override val isUserGenerated:Boolean = true
 ): IDataExerciseDetail {
     override fun toString(): String {

@@ -8,9 +8,7 @@ import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import ca.philrousse.android02.musculaction.data.entity.views.ICard
@@ -92,7 +90,7 @@ class CategoriesListFragment : Fragment() {
     private fun hookRecycleView(){
         val recyclerView: RecyclerView = binding.recyclerView
         val adapter = CardsAdapter {
-            Log.d(TAG, "hookRecycleView: $it")
+            Log.d(TAG, "Click on Item: $it")
             it.id?.let { categoryId ->
                 
                 val action = CategoriesListFragmentDirections.actionDetailCategory(categoryId,it.name)
