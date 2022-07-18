@@ -141,10 +141,21 @@ class MusculactionRemoteDAO {
     fun insertExercise(doc: NewExercises) {
         Log.d(TAG, "insertExercise: ")
         val docRef = db.document(doc.parentId).collection("exercises").document(doc.name)
-        docRef.set(doc)
+        docRef.set(mapOf(
+            "description" to doc.description,
+            "name" to doc.name,
+            "short_description" to doc.short_description,
+            "subcategory" to doc.subcategory,
+            "imageID" to doc.imageID
+        ))
         doc.child.forEach {
             val newDetail = it as NewDetail
-            docRef.collection("details").document(newDetail.name).set(newDetail)
+            docRef.collection("details").document(newDetail.name).set(mapOf(
+                "description" to newDetail.description,
+                "name" to newDetail.name,
+                "video" to newDetail.video,
+                "order" to newDetail.order,
+            ))
         }
 
     }
