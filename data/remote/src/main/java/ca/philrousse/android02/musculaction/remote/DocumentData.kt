@@ -171,7 +171,7 @@ class ExerciseDocumentDetail(snapshot: DocumentSnapshot) :DocumentData(snapshot)
     }
 
     var order:Long = snapshot.getLong("order") ?: -1
-    override var video: String? = if (snapshot.getString("video").isNullOrBlank()) null else snapshot.getString("video")?.split("/")?C.lastOrNull()
+    override var video: String? = if (snapshot.getString("video").isNullOrBlank()) null else snapshot.getString("video")?.split("/")?.lastOrNull()
     override var short_description: String? = null
 
 }
