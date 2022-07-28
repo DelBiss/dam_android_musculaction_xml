@@ -2,10 +2,7 @@ package ca.philrousse.android02.musculaction.data.entity.views
 
 import androidx.room.Embedded
 import androidx.room.Relation
-import ca.philrousse.android02.musculaction.data.entity.Category
-import ca.philrousse.android02.musculaction.data.entity.Exercise
-import ca.philrousse.android02.musculaction.data.entity.Image
-import ca.philrousse.android02.musculaction.data.entity.Subcategory
+import ca.philrousse.android02.musculaction.data.entity.*
 
 data class CategoryExercisesCollections(
     @Embedded
@@ -16,7 +13,7 @@ data class CategoryExercisesCollections(
         entityColumn = "id",
         entity = Image::class
     )
-    override val image: Image,
+    override val image: Image? = null,
 
     @Relation(
         parentColumn = "id",
@@ -24,30 +21,34 @@ data class CategoryExercisesCollections(
         entity = Subcategory::class
     )
 
-    override val child: List<SubcategoryExercisesCardsCollection> = listOf()
+    override var child: List<ICardsCollection> = listOf()
 ): IViewCardsCollections {
-    override val id: Long?
+    override val id: String?
         get() = category.id
-    override val name: String
+    override var name: String
         get() = category.name
-    override val description: String
+        set(value) {category.name = value}
+    override var description: String
         get() = category.description
+        set(value) {category.description = value}
+    override var short_description: String?=null
 }
 
 data class SubcategoryExercisesCardsCollection(
     @Embedded
-    private val subcategory: Subcategory = Subcategory(),
+    val subcategory: Subcategory = Subcategory(),
     @Relation(
         parentColumn = "id",
         entityColumn = "parentId",
         entity = Exercise::class
     )
-    override val child:List<CardExercise> = listOf()
+    override var child: List<ICard> = listOf()
 ): ICardsCollection {
-    override val id: Long?
+    override val id: String?
         get() = subcategory.id
-    override val name: String
+    override var name: String
         get() = subcategory.name
+        set(value) {subcategory.name = value}
 }
 
 data class CardExercise(
@@ -59,14 +60,19 @@ data class CardExercise(
         entityColumn = "id",
         entity = Image::class
     )
-    override val image: Image
+    override val image: Image?
 ): ICard {
-    override val id: Long?
+    override val id: String?
         get() = exercise.id
-    override val name: String
+    override var name: String
         get() = exercise.name
-    override val description: String
+        set(value) {exercise.name = value}
+    override var description: String
+        get() = exercise.description
+        set(value) {exercise.description = value}
+    override var video: String? = null
+    override var short_description: String?
         get() = exercise.short_description
-    override val video: String?
-        get() = null
+        set(value) {exercise.short_description = value?:""}
+
 }

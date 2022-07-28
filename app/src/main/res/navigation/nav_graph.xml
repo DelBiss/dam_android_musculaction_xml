@@ -7,45 +7,68 @@
 
     <fragment
         android:id="@+id/CategoriesList"
-        android:name="ca.philrousse.android02.musculactionX.FirstFragment"
+        android:name="ca.philrousse.android02.musculactionX.fragment.CategoriesListFragment"
         android:label="@string/categories_list_fragment_label"
-        tools:layout="@layout/fragment_first">
+        tools:layout="@layout/fragment_list">
 
         <action
-            android:id="@+id/action_show_exercices_from_category"
+            android:id="@+id/action_detail_category"
             app:destination="@id/ExercicesList"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/ExercicesList"
-        android:name="ca.philrousse.android02.musculactionX.SecondFragment"
+        android:name="ca.philrousse.android02.musculactionX.fragment.ExercisesListFragment"
         android:label="{title}"
-        tools:layout="@layout/fragment_second">
+        tools:layout="@layout/fragment_header_and_list">
 
         <argument
             android:name="category_id"
-            app:argType="long" />
+            app:argType="string" />
         <argument
             android:name="title"
             app:argType="string"
             android:defaultValue="Fragment 2" />
         <action
-            android:id="@+id/action_ExercisesList_to_ExerciseDetail"
+            android:id="@+id/action_exercise_detail"
             app:destination="@id/ExerciseDetail" />
+        <action
+            android:id="@+id/action_add_exercices"
+            app:destination="@id/EditDetail" >
+            <argument
+                android:name="exercise_id" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/ExerciseDetail"
-        android:name="ca.philrousse.android02.musculactionX.ThirdFragment"
+        android:name="ca.philrousse.android02.musculactionX.fragment.ExerciseDetailsFragment"
         android:label="{title}"
-        tools:layout="@layout/fragment_first">
+        tools:layout="@layout/fragment_list">
         <argument
             android:name="exercise_id"
-            app:argType="long" />
+            app:argType="string" />
         <argument
             android:name="title"
             app:argType="string"
             android:defaultValue="Fragment 3" />
+        <action
+            android:id="@+id/action_edit_detail"
+            app:destination="@id/EditDetail" >
+            <argument
+                android:name="subcategory_id" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/EditDetail"
+        tools:layout="@layout/layout_edit_section"
+        android:name="ca.philrousse.android02.musculactionX.fragment.EditExerciseDetailsFragment" >
+        <argument
+            android:name="exercise_id"
+            app:argType="string" />
+        <argument
+            android:name="subcategory_id"
+            app:argType="string" />
     </fragment>
 
 </navigation>

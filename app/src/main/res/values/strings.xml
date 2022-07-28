@@ -50,4 +50,13 @@
     <string name="email_recipient">information@collegeahuntsic.qc.ca</string>
     <string name="email_intent_title">Choisir un moyen d\'envoyer le courriel</string>
     <string name="phone_intent">(514) 389–5921</string>
+    <string name="helper_field_required">Ce champs ne peut être vide</string>
+    <string name="toast_insert">Le nouvelle exercise a été bien enregistré</string>
+    <string name="toast_update">L\'exercise a été mise à jour</string>
+    <string name="toast_fail">La sauvegarde à échoué</string>
+    <string name="action_add">Ajouter un exercise</string>
+    <string name="action_delete">Supprimer l\'exercise</string>
+    <string name="action_save">Sauvegarder</string>
+    <string name="action_edit">Modifier l\'exercise</string>
+    <string name="new_card_title">Ajouter un exercise personnel</string>
 </resources>

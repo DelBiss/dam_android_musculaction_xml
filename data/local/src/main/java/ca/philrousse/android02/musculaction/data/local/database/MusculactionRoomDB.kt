@@ -12,11 +12,13 @@ import androidx.work.workDataOf
 import ca.philrousse.android02.musculaction.data.entity.*
 import ca.philrousse.android02.musculaction.data.local.database.MusculactionDatabaseWorker.Companion.KEY_FILENAME
 
-@Database(entities = [Category::class,Exercise::class,ExerciseDetail::class,ExerciseDetailVideo::class,Subcategory::class, Image::class], version = 3, exportSchema = false)
+@Database(entities = [Category::class,Exercise::class,ExerciseDetail::class,ExerciseDetailVideo::class,Subcategory::class, Image::class], version = 1, exportSchema = false)
 abstract class MusculactionRoomDB: RoomDatabase() {
-    abstract fun dao(): MusculactionDAO
+    abstract fun dao(): MusculactionLocalDAO
 
     companion object {
+        private const val JSON_FILE = "musculaction_data.json"
+        private const val BD_NAME = "bdmusculation"
         @Volatile
         private var instance: MusculactionRoomDB? = null
 
@@ -27,7 +29,7 @@ abstract class MusculactionRoomDB: RoomDatabase() {
         }
 
         private fun buildDatabase(context: Context): MusculactionRoomDB {
-            return Room.databaseBuilder(context, MusculactionRoomDB::class.java, "bdmusculation")
+            return Room.databaseBuilder(context, MusculactionRoomDB::class.java, BD_NAME)
                 .addCallback(
                     object : RoomDatabase.Callback() {
 
@@ -43,7 +45,7 @@ abstract class MusculactionRoomDB: RoomDatabase() {
 
                         private fun populateDB() {
                             val request = OneTimeWorkRequestBuilder<MusculactionDatabaseWorker>()
-                                .setInputData(workDataOf(KEY_FILENAME to "muculaction_data.json"))
+                                .setInputData(workDataOf(KEY_FILENAME to JSON_FILE))
                                 .build()
                             WorkManager.getInstance(context).enqueue(request)
                         }

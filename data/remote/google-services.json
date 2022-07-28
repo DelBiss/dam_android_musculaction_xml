@@ -1,0 +1,97 @@
+{
+  "project_info": {
+    "project_number": "463253984704",
+    "project_id": "dam-android02-musculaction",
+    "storage_bucket": "dam-android02-musculaction.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:463253984704:android:3fc3340e107c544f7c2425",
+        "android_client_info": {
+          "package_name": "ca.philrousse.android02.musculaction.remote"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "463253984704-2vhqidm5mnsnjin7n62bhpgthd2mtjbe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAI8JZVS_AQZIgw1NlTCnXiIikj42RRqC0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "463253984704-2vhqidm5mnsnjin7n62bhpgthd2mtjbe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:463253984704:android:6a7a5fdbe78d79ff7c2425",
+        "android_client_info": {
+          "package_name": "ca.philrousse.android02.musculactionX"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "463253984704-2vhqidm5mnsnjin7n62bhpgthd2mtjbe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAI8JZVS_AQZIgw1NlTCnXiIikj42RRqC0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "463253984704-2vhqidm5mnsnjin7n62bhpgthd2mtjbe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:463253984704:android:477ac3ffb5b4ed927c2425",
+        "android_client_info": {
+          "package_name": "com.google.firebase.example.fireeats"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "463253984704-2vhqidm5mnsnjin7n62bhpgthd2mtjbe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAI8JZVS_AQZIgw1NlTCnXiIikj42RRqC0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "463253984704-2vhqidm5mnsnjin7n62bhpgthd2mtjbe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

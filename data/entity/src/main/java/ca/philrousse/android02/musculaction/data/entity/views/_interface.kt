@@ -1,6 +1,7 @@
 package ca.philrousse.android02.musculaction.data.entity.views
 
 import androidx.recyclerview.widget.DiffUtil
+import ca.philrousse.android02.musculaction.data.entity.IDataImage
 import ca.philrousse.android02.musculaction.data.entity.Image
 
 class ListComparator<T: IListElement>:DiffUtil.ItemCallback<T>(){
@@ -12,30 +13,40 @@ class ListComparator<T: IListElement>:DiffUtil.ItemCallback<T>(){
 
 }
 
-interface IListElement{
-    val name:String
-    val id:Long?
+interface IListElement {
+    var name:String
+    val id: String?
     override fun equals(other: Any?): Boolean
+
 }
 
-interface ICard: IListElement {
-    val image: Image?
-    val description:String?
-    val video: String?
+interface IImageDescription:IListElement{
+    val image: IDataImage?
+    var description: String
+    var short_description: String?
 }
 
-interface ICardsCollection: IListElement {
-    val child:List<ICard>
+interface ICard: IImageDescription {
+    var video: String?
+
 }
 
-interface IViewCardsCollections: IListElement {
-    val image: Image?
-    val description:String?
-    val child:List<ICardsCollection>
+interface ICardsCollection:IListElement {
+    var child:List<ICard>
 }
 
-interface IViewCards: IListElement {
-    val image: Image?
-    val description:String?
-    val child:List<ICard>
+interface IViewCardsCollections: IImageDescription {
+    var child:List<ICardsCollection>
+}
+
+interface IViewCards: IImageDescription {
+    var child:List<ICard>
+}
+
+data class  EmptyCard(override var name: String) :ICard{
+    override var video: String? = null
+    override var short_description: String? = null
+    override val image: Image? = null
+    override var description: String = ""
+    override val id: String? = null
 }

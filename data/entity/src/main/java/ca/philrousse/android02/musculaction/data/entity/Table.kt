@@ -1,9 +1,12 @@
+@file:Suppress("unused")
+
 package ca.philrousse.android02.musculaction.data.entity
 
 import android.content.Context
 import android.graphics.drawable.Drawable
 import androidx.core.content.res.ResourcesCompat
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
 @Entity
@@ -12,7 +15,7 @@ data class Image(
     val id:String,
     var smallResource:String?=null,
     var resource:String?=null
-){
+) : IDataImage {
     fun update(other:Image){
         if(other.id == id){
             other.smallResource?.also {
@@ -36,11 +39,22 @@ data class Image(
         return null
     }
 
-    fun getResourceId(context: Context):Int?{
+    fun getResourceUri():String?{
+        return (resource ?: smallResource)?.let {
+            "@drawable/$it"
+        }
+    }
+
+    fun getSmallestResourceUri():String?{
+        return (smallResource ?: resource)?.let {
+            "@drawable/$it"
+        }
+    }
+    private fun getResourceId(context: Context):Int?{
         return getResourceId(context, resource ?: smallResource) ?: getResourceId(context, brokenImageResourceString)
     }
 
-    fun getSmallestResourceId(context: Context):Int?{
+    private fun getSmallestResourceId(context: Context):Int?{
         return getResourceId(context,  smallResource ?: resource) ?: getResourceId(context, brokenImageResourceString)
     }
 
@@ -49,8 +63,8 @@ data class Image(
             ResourcesCompat.getDrawable(context.resources,it,null)
         }
     }
-    fun getDrawable(context: Context):Drawable?{
-        return getDrawable(context, getResourceId(context))
+    override fun getDrawable(context: Context, default:Drawable?):Drawable?{
+        return getDrawable(context, getResourceId(context)) ?: default
     }
     fun getSmallestDrawable(context:Context):Drawable?{
         return getDrawable(context, getSmallestResourceId(context))
@@ -62,13 +76,13 @@ data class Image(
 
 @Entity
 data class Category(
-    var name:String="N/D",
-    var description:String="N/D",
-    var imageID:String?=null,
+    override var name:String="",
+    override var description:String="",
+    override var imageID:String?=null,
     @PrimaryKey(autoGenerate = true)
-    val id:Long?=null,
-    val isUserGenerated:Boolean = true
-){
+    override val id: String? =null,
+    override val isUserGenerated:Boolean = true
+): IDataCategory {
     override fun toString(): String {
         return "Category[#$id](name=$name, imageId=$imageID)"
     }
@@ -76,56 +90,67 @@ data class Category(
 
 @Entity
 data class Subcategory(
-    var name:String="N/D",
+    override var name:String="",
     var parentId:Long?=null,
     @PrimaryKey(autoGenerate = true)
-    val id:Long?=null,
-    val isUserGenerated:Boolean = true
-){
+    override val id: String? =null,
+    override val isUserGenerated:Boolean = true
+): IDataSubcategory {
     override fun toString(): String {
         return "Subcategory[#$id](name=$name, parentId=${parentId})"
     }
 }
 
-@Entity
+
+
+@Entity(foreignKeys = [ForeignKey(entity = Subcategory::class,
+    parentColumns = arrayOf("id"),
+    childColumns = arrayOf("parentId"),
+    onDelete = ForeignKey.CASCADE)]
+)
 data class Exercise(
-    var name:String="N/D",
-    var short_description:String="N/D",
-    var description:String="N/D",
-    var imageID:String?=null,
-    var parentId:Long?=null,
+    override var name:String="",
+    override var short_description:String="",
+    override var description:String="",
+    override var imageID:String?=null,
+    var parentId:String?=null,
     @PrimaryKey(autoGenerate = true)
-    val id:Long?=null,
-    val isUserGenerated:Boolean = true
-){
+    override val id: String? =null,
+    override val isUserGenerated:Boolean = true
+): IDataExercise {
     override fun toString(): String {
         return "Exercise[#$id](name=$name, imageId=$imageID, parentId=${parentId})"
     }
 }
 
-@Entity
+@Entity(foreignKeys = [ForeignKey(entity = Exercise::class,
+    parentColumns = arrayOf("id"),
+    childColumns = arrayOf("parentId"),
+    onDelete = ForeignKey.CASCADE)])
 data class ExerciseDetail(
-    var name:String="N/D",
-    var description:String="N/D",
-    var parentId:Long?=null,
+    override var name:String="",
+    override var description:String="",
+    var parentId:String?=null,
     @PrimaryKey(autoGenerate = true)
-    val id:Long?=null,
-    val isUserGenerated:Boolean = true
-){
+    override val id: String? =null,
+    override val isUserGenerated:Boolean = true
+): IDataExerciseDetail {
     override fun toString(): String {
         return "ExerciseDetail[#$id](name=$name, parentId=${parentId})"
     }
-
 }
 
-@Entity
+@Entity(foreignKeys = [ForeignKey(entity = ExerciseDetail::class,
+    parentColumns = arrayOf("id"),
+    childColumns = arrayOf("parentId"),
+    onDelete = ForeignKey.CASCADE)])
 data class ExerciseDetailVideo (
-    var videoUrl:String="N/D",
+    override var videoUrl:String="",
     var parentId:Long?=null,
     @PrimaryKey(autoGenerate = true)
-    val id:Long?=null,
-    val isUserGenerated:Boolean = true
-){
+    override val id:Long?=null,
+    override val isUserGenerated:Boolean = true
+) : IDataExerciseDetailVideo {
     override fun toString(): String {
         return "ExerciseDetailVideo[#$id](videoUrl=$videoUrl, parentId=${parentId})"
     }

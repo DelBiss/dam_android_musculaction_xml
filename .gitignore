@@ -15,3 +15,5 @@
 local.properties
 /.idea/
 .idea/misc.xml
+
+CloudFireStore Reset Data/node_modules/

@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "dam-android02-musculaction",
+  "private_key_id": "f22eb56ad639ae03c98d0f191bbe3bb1d87866ef",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCdDT7QR4WFsha5\n3VdrNNn0vUyqhQ8op3m8lpoPWt79DHStW2UPUl+bUK8rNYfGtt57iDIyNtFzUUg8\nCJbPvpvYj7N1RIOe5f0gsQY6ARsANpQaDRrxLnrfmCYxaOa6vmUZsm4VtysthFrk\ncErD53rcLJx/y6roi0a4tLtcrWY8DeoUWimX1GqtoPjGtdTrbymgv3d4Q4WI2MZd\n6OJ8d49GcBH85ZU4XTnUtozb9EA0aj/KOXIkrV8YsnIcjDB4pl9XzMzXgpIGJWqi\nvPq0iEXq6BFXlmpFvQpEzgZKDcW73ClPSldWCb+OArxlvHH59Jd0o7sSDuiCra4q\n89ZnNcWfAgMBAAECggEALDZJ3BV+W7xeVHWgwf/vacwOtKRft5iqFzKobTEuPDuQ\n7yqfARi17IHixj28Gu9pI4qcYvF2tkmIFcpvNk2ZDvapVRZ0HTvurhDXyWV9ReqX\nd9v/nSzyD1cETX2UErc9u+W0wu09PQOZGN0Z1xunxSrT5dAerXdj8eSDKFxyPu5U\n9a0EXoU3iZ50kNZi9yf9h48jrhtsvqNLVn8sGxMN/ANGUTUgG/kqBSJkX5vCM8Zl\nHcLEVqKv+xGwupDAoK9+CAtGK+H+I33p1RCJQsV6EOU2YuDQUBffXRg906rrsP/i\nZoQxyyaZSRBKX4icjMrmjjbT9ks17IkS4PCNoDfLBQKBgQDIrnTdaALck/I2KPxW\njrkvEga6aipEWgz43CfKHRi2SrBTQpL1kl2pDgz/bJm4csBR4afyvh25qPZv6afZ\nNiG0uy60FgSHvIDFRseOHvSjFBWQUUbnuTRh/DezprCS9AaUZTblfX3SB1AeD/DC\n/Xf3s6GLOm6wWtHQ6iRFE5h7CwKBgQDIV/U2YW4US21chX+NJWjpEsuXnzWcmFrl\neuSBLeiFiK5Y5OpAx19e2NkAGNDfOLrdu/IXkewgUrtWosr8vEv5ZciPck7sxjRo\nYDFOpmzrDNYpzPdnSNMfOgQoOKnO4i0hxKNRVI4rbi9q5LOrovmqylzFpI+SieeY\n7dBtVEncPQKBgQCiDY69g9JbwPSkm7A5TYNo6UuZmUWMcJNtGorfAWQFQIbmlSoL\nOCh97aS9VjtD4RZAiNKQiMmENVbbxHkQRFAvm7/5GJaL7cKmi6N1trWiQwOuyJNT\naBFO1tc8MW0BHiF6D8mmxBGoWtNtkz2+l+QamGno/kSIEK7B33FufoZxRQKBgA4A\n//X2J4CpqRJPjpPqKoQoOSz3BwNULv5dcb2J3PgAjtdN4QX4KbVyiPCVy3ve9kjr\ni0eUfqHfxpKOvIugCdt7/uHwBo5MaHtnResOfQyNECdJ2X1RvNgw8PtywoPgkXEL\n0rKrq2hjwlLBe8GimbsTfBqgnxyKITMyZGBQBP2tAoGBAJ0BtPa01YPCwdRvx8AN\nyKJdHmSCNBuNi4Am2QBT/wxqI0t0F99Mf7UEaiSWKpdSfQ7WRlHDiSMIGifpp4lx\nrgguVDjA418Tibbmbpw0axI+I/BsuIVDCqQmwZ72FupzIsBMAe3NGrM7HCiMzQJp\nqIQ2uLSZYocHzTkuC0IHNa9Q\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-bpu7j@dam-android02-musculaction.iam.gserviceaccount.com",
+  "client_id": "110400190110899488636",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-bpu7j%40dam-android02-musculaction.iam.gserviceaccount.com"
+}

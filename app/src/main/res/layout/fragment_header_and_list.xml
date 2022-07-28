@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".fragment.ExercisesListFragment">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="data"
+            type="ca.philrousse.android02.musculaction.data.entity.views.IImageDescription" />
+        <variable
+            name="isEdit"
+            type="Boolean" />
+    </data>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:tintMode="screen"
+            app:imageDrawable="@{data.image.getDrawable(context, @drawable/ic_broken_image)}"
+            app:tint="?attr/scrimBackground"
+            tools:srcCompat="@drawable/ic_broken_image" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimaryContainer"
+            android:padding="16dp"
+            android:text="@{data.name}"
+            tools:visibility="gone"
+            android:visibility='@{data.name != null &amp;&amp; false ? View.VISIBLE : View.GONE}'
+            tools:text="Exercices mollets"
+            android:textAppearance="?attr/textAppearanceDisplaySmall"
+            android:textColor="?attr/colorOnPrimaryContainer" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceBody1"
+            android:lineSpacingExtra="4sp"
+            android:layout_margin="16dp"
+            android:text="@{data.description}"
+            android:visibility='@{data.description != null ? View.VISIBLE : View.GONE}'
+            tools:text="Muscler ses mollets n'est pas chose simple, pas que les exercices soient bien compliqués mais souvent parce que les résultats peuvent être décevants. Ces muscles sont souvent délaissés ce qui explique le fait qu'ils soient à la traîne. Dans ce cas, il suffira de les travailler dur pour rectifier le tir. Mais parfois les mollets ont du mal à se développer surtout s'ils sont « courts ». Et cela on n'y peut pas grand chose, question de génétique !\n\nVous l'aurez compris, tout monde n'a pas la même facilité à développer ces muscles. Si vous n'êtes pas gâté, n'abandonnez pas pour autant ! Il va falloir les travailler encore plus dur et leur donner beaucoup d'attention.\n\nComment muscler les mollets ? Quels sont les meilleurs exercices ? Comment bien les développer sous toutes les coutures ?\n\nVous trouverez dans cette rubrique tous les exercices les plus efficaces pour les mollets ainsi que des explications et conseils pour la musculation des mollets."
+            />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="LinearLayoutManager"
+        tools:itemCount="3"
+        tools:listitem="@layout/item_card_collection" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/fab_edit"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        android:layout_marginEnd="@dimen/fab_margin"-->
+<!--        android:layout_marginBottom="16dp"-->
+<!--        tools:visibility="gone"-->
+<!--        android:visibility='@{isEdit ? View.VISIBLE : View.GONE}'-->
+<!--        app:srcCompat="@drawable/ic_baseline_edit_24" />-->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginBottom="16dp"
+        android:visibility='@{isEdit != null &amp;&amp; !isEdit ? View.VISIBLE : View.GONE}'
+        app:srcCompat="@drawable/ic_baseline_add_24" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
